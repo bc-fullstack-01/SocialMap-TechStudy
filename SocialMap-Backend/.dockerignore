@@ -1,0 +1,7 @@
+node_modules
+dist
+certs/*
+Logs/*
+.vscode
+midias
+.gitgnore

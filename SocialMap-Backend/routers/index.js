@@ -1,0 +1,7 @@
+exports.User = require('./user.js')
+exports.Post = require('./post.js')
+exports.Comment = require('./comment.js')
+exports.Profile = require('./profile.js')
+exports.Feed = require('./feed.js')
+exports.Unsecurity = require('./unsecurity.js')
+exports.Seed = require('./seed.js')

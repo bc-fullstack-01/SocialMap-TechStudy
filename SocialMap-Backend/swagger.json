@@ -1,0 +1,831 @@
+{
+   "swagger": "2.0",
+   "info":{
+      "title":"SysMap Social App",
+      "version":"1.0.0",
+      "description": "Edno Almeida Projeto Backend",
+      "contact": {
+         "email": "edno2819@gmail.com"
+       }
+   },
+   "basePath": "/v1",
+   "components": {
+      "securitySchemes": {
+         "bearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT"
+         }
+      }
+   },
+   "paths": {
+      "/unsecurity/register": {
+         "post": {
+            "description": "Create a user",
+            "summary": "Create a user and a profile",
+            "tags": [
+               "Unsecurity"
+            ],
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "name": {"type": "string"},
+                           "user": {"type": "string"},
+                           "password": {"type": "string"}
+                        },
+                        "example": {
+                           "name": "Edno",
+                           "user": "Edno2819",
+                           "password": "Senha"
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "201": {
+                  "description": "User created"
+               },
+               "400": {
+                  "description": "User already exists"
+               }
+            }
+         }
+      },
+      "/unsecurity/login": {
+         "post": {
+            "description": "User login",
+            "summary": "Login a user",
+            "tags": [
+               "Unsecurity"
+            ],
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "user": {
+                              "type": "string"
+                           },
+                           "password": {
+                              "type": "string"
+                           }
+                        },
+                        "example": {
+                           "user": "Edno2819",
+                           "password": "Senha"
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "201": {
+                  "description": "User created"
+               },
+               "401": {
+                  "description": "Incorrect username or password"
+               }
+            }
+         }
+      },
+      "/unsecurity/alluser": {
+         "get": {
+            "description": "Get all profiles",
+            "summary": "People not logged in can search for users",
+            "tags": [
+               "Unsecurity"
+            ],
+            "responses": {
+               "200": {
+                  "description": "Ok"
+               }
+            }
+         }
+      },
+      "/posts": {
+         "get": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Get all posts",
+            "summary": "Get all posts",
+            "tags": [
+               "Post"
+            ],
+            "responses": {
+               "200": {
+                  "description": "Ok"
+               },
+               "404": {
+                  "description": "Post did not respect validation requirements"
+               }
+            }
+         },
+         "post": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Create a post",
+            "summary": "Create a post",
+            "tags": [
+               "Post"
+            ],
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "title": {
+                              "type": "string"
+                           },
+                           "content": {
+                              "type": "string"
+                           }
+                        },
+                        "example": {
+                           "title": "Hi this is my first post",
+                           "content": "Welcome to my first post"
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "201": {
+                  "description": "Post created"
+               }
+            }
+         }
+      },
+      "/posts/{id}": {
+         "get": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Searching for a post by id",
+            "summary": "Searching for a post by id",
+            "tags": [
+               "Post"
+            ],
+            "parameters": [
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Post id",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "content": {
+                     "application/json": {
+                        "type": "object"
+                     }
+                  }
+               }
+            }
+         },
+         "delete": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Delete a post",
+            "summary": "Delete a post",
+            "tags": [
+               "Post"
+            ],
+            "parameters": [
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Post id",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Successfully deleted"
+               }
+            }
+         },
+         "put": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Update a post",
+            "summary": "Update a post",
+            "tags": [
+               "Post"
+            ],
+            "parameters": [
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Post id",
+                  "required": true
+               }
+            ],
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "title": {
+                              "type": "string"
+                           },
+                           "content": {
+                              "type": "string"
+                           }
+                        },
+                        "example": {
+                           "title": "Hello this is a post",
+                           "content": "Welcome to the post"
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Updated post"
+               }
+            }
+         }
+      },
+      "/posts/{id}/like": {
+         "post": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Like a post",
+            "summary": "Like a post",
+            "tags": [
+               "Post"
+            ],
+            "parameters": [
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Post id",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "201": {
+                  "description": "Liked post"
+               }
+            }
+         }
+      },
+      "/posts/{id}/unlike": {
+         "post": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Unlike a post",
+            "summary": "Unlike a post",
+            "tags": [
+               "Post"
+            ],
+            "parameters": [
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Post id",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "201": {
+                  "description": "Unliked post"
+               }
+            }
+         }
+      },
+      "/posts/{postId}/comments": {
+         "post": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Create a comment",
+            "summary": "Create a comment",
+            "tags": [
+               "Comment"
+            ],
+            "parameters": [
+               {
+                  "name": "postId",
+                  "in": "path",
+                  "description": "Post id",
+                  "required": true
+               }
+            ],
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "content": {
+                              "type": "string"
+                           }
+                        },
+                        "example": {
+                           "content": "Welcome to my first comment"
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "201": {
+                  "description": "Comment created"
+               },
+               "404": {
+                  "description": "Comment did not respect validation requirements"
+               }
+            }
+         },
+         "get": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Get all comments",
+            "summary": "Get all comments",
+            "tags": [
+               "Comment"
+            ],
+            "parameters": [
+               {
+                  "name": "postId",
+                  "in": "path",
+                  "description": "Post id",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Ok"
+               }
+            }
+         }
+      },
+      "/posts/{postId}/comments/{id}": {
+         "get": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Searching for a comment by id",
+            "summary": "Searching for a comment by id",
+            "tags": [
+               "Comment"
+            ],
+            "parameters": [
+               {
+                  "name": "postId",
+                  "in": "path",
+                  "description": "Post id",
+                  "required": true
+               },
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Comment id",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "content": {
+                     "application/json": {
+                        "type": "object"
+                     }
+                  }
+               }
+            }
+         },
+         "put": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Update a comment",
+            "summary": "Update a comment",
+            "tags": [
+               "Comment"
+            ],
+            "parameters": [
+               {
+                  "name": "postId",
+                  "in": "path",
+                  "description": "Post id",
+                  "required": true
+               },
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Comment id",
+                  "required": true
+               }
+            ],
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "content": {
+                              "type": "string"
+                           }
+                        },
+                        "example": {
+                           "content": "This is a comment"
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Updated comment"
+               }
+            }
+         },
+         "delete": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Delete a comment",
+            "summary": "Delete a comment",
+            "tags": [
+               "Comment"
+            ],
+            "parameters": [
+               {
+                  "name": "postId",
+                  "in": "path",
+                  "description": "Post id",
+                  "required": true
+               },
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Comment id",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Successfully deleted"
+               }
+            }
+         }
+      },
+      "/posts/{postId}/comments/{id}/like": {
+         "post": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Like a comment",
+            "summary": "Like a comment",
+            "tags": [
+               "Comment"
+            ],
+            "parameters": [
+               {
+                  "name": "postId",
+                  "in": "path",
+                  "description": "Post id",
+                  "required": true
+               },
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Comment id",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "201": {
+                  "description": "Liked comment"
+               }
+            }
+         }
+      },
+      "/posts/{postId}/comments/{id}/unlike": {
+         "post": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Unlike a comment",
+            "summary": "Unlike a comment",
+            "tags": [
+               "Comment"
+            ],
+            "parameters": [
+               {
+                  "name": "postId",
+                  "in": "path",
+                  "description": "Post id",
+                  "required": true
+               },
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Comment id",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "201": {
+                  "description": "Comment unliked"
+               }
+            }
+         }
+      },
+      "/feed": {
+         "get": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Retrieves all posts from followed profiles",
+            "summary": "Retrieves all posts from followed profiles",
+            "tags": [
+               "Feed"
+            ],
+            "responses": {
+               "200": {
+                  "description": "Ok"
+               }
+            }
+         }
+      },
+      "/profiles": {
+         "get": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Get all profiles",
+            "summary": "Get all profiles",
+            "tags": [
+               "Profile"
+            ],
+            "responses": {
+               "200": {
+                  "description": "Ok"
+               }
+            }
+         }
+      },
+      "/profiles/search": {
+         "get": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Search a profile",
+            "summary": "Search a profile",
+            "tags": [
+               "Profile"
+            ],
+            "parameters": [
+               {
+                  "in": "query",
+                  "profile": "profile",
+                  "type": "string",
+                  "required": true
+               }
+            ]
+         }
+      },
+      "/profiles/{id}": {
+         "get": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Get a profile by id",
+            "summary": "Get a profile by id",
+            "tags": [
+               "Profile"
+            ],
+            "parameters": [
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Profile id",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "content": {
+                     "application/json": {
+                        "type": "object"
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/profiles/{id}/follow": {
+         "post": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Follow a profile",
+            "summary": "Follow a profile",
+            "tags": [
+               "Profile"
+            ],
+            "parameters": [
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Profile id",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "content": {
+                     "application/json": {
+                        "type": "object"
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/profiles/{id}/unfollow": {
+         "post": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Unfollow a profile",
+            "summary": "Unfollow a profile",
+            "tags": [
+               "Profile"
+            ],
+            "parameters": [
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Profile id",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "content": {
+                     "application/json": {
+                        "type": "object"
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/users/me": {
+         "get": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Get the user",
+            "summary": "Get the user",
+            "tags": [
+               "Users"
+            ],
+            "responses": {
+               "200": {
+                  "description": "Ok"
+               }
+            }
+         },
+         "put": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Update the user",
+            "summary": "Update the user",
+            "tags": [
+               "Users"
+            ],
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "name": {
+                              "type": "string"
+                           },
+                           "user": {
+                              "type": "string"
+                           },
+                           "password": {
+                              "type": "string"
+                           }
+                        },
+                        "example": {
+                           "name": "Edno2819none",
+                           "user": "Edno2819",
+                           "password": "Senha"
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Successfully updated"
+               }
+            }
+         },
+         "delete": {
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "description": "Delete a user",
+            "summary": "Delete a user",
+            "tags": [
+               "Users"
+            ],
+            "responses": {
+               "200": {
+                  "description": "Successfully deleted"
+               }
+            }
+         }
+      },
+      "/seed": {
+         "get": {
+            "description": "Create seed",
+            "summary": "Create seed",
+            "tags": [
+               "Dev"
+            ],
+            "responses": {
+               "200": {
+                  "description": "Ok"
+               }
+            }
+         }
+      }
+   }
+}

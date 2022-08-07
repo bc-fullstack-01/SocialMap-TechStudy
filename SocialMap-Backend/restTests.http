@@ -1,0 +1,47 @@
+### criando usuario
+POST http://localhost:4000/v1/unsecurity/register
+content-type: application/json
+
+{
+    "name": "jose serrad",
+    "user": "josed",
+    "password": "9987350"
+}
+
+### Criando um token com user
+POST http://localhost:4000/v1/unsecurity/login
+content-type: application/json
+
+{
+    "user": "josed",
+    "password": "9987350"
+}
+
+### criando um post com token
+POST http://localhost:4000/v1/posts
+content-type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiam9zZSBzZXJyYWQiLCJ1c2VyIjoiam9zZWQiLCJwcm9maWxlX2lkIjoiNjJlZThmNmM2YWYwOTY4MWRhOTY0MjIzIiwiaWF0IjoxNjU5ODAxNTA1fQ.W2dmEuai0B_J47TPc_lIx9nJHQQhdKjwCqI52hwx7wM
+
+{
+    "title": "como se fazer amigos!",
+    "description": "Um livro legal pra ajduar"
+}
+
+
+### Get all profilea
+GET http://localhost:4000/v1/profiles/62d7184c4d0353741894b538
+content-type: application/json
+authorization: eyJhbGciOiJIUzI1NiJ9.ZWRubzI4.sFWiHgWjg3M9-jqyErv3lSzS72JsYul1tIRPATWN8jA
+
+
+
+### follow
+POST http://localhost:4000/v1/profiles/62d7184c4d0353741894b538/follow
+content-type: application/json
+authorization: eyJhbGciOiJIUzI1NiJ9.ZWRubzI4.sFWiHgWjg3M9-jqyErv3lSzS72JsYul1tIRPATWN8jA
+
+
+### get post from follogins
+GET http://localhost:4000/v1/feed
+content-type: application/json
+authorization: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiZWRubzI4IiwicHJvZmlsZSI6eyJfaWQiOiI2MmQ3MDk3YjEwNjgxYTAyNjNjYjhjMDciLCJuYW1lIjoiZWRubyBzbG1yaWZzIiwidXNlciI6IjYyZDM2NGNiYjJiMjM2YmVlM2RlZjZkMCIsImZvbGxvd2luZyI6WyI2MmQ2ZmY3MzBjM2MwMWQ3YWZlOTg3NmEiLCI2MmQ3MTdhYWU1NDBjZDU3ZTIyZTdlYzEiLCI2MmQ5NDM0YTg3MjU3NTg0OWFhZTk4OTAiLCI2MmQ5NDM0Yjg3MjU3NTg0OWFhZTk4OWQiXSwiYWN0aXZlIjp0cnVlfX0.t3GboA6Lu8YHVoeJcn0yRCbpcYULMegerK6j-0Qyg6w

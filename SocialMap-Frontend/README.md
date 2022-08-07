@@ -1,37 +1,11 @@
 SocialMap Frontend
 =========
 
-
-## Links de ajuda para construir o README.md
-- https://github.com/ekalinin/github-markdown-toc/edit/master/README.md
-- https://blog.rocketseat.com.br/como-fazer-um-bom-readme/
-- https://github.com/animavita/animavita
-
-### Features
-- [x] Cadastro de usuário
-- [x] Cadastro de cliente
-- [ ] Cadastro de produtos
-
-
 <h1 align="center">
   <img alt="NextLevelWeek" title="#NextLevelWeek" src="./assets/banner.png"/>
 </h1>
 
-<p align="center"> 
-  <a href="https://discord.gg/BHHz77rhb6">
-    <img src="https://img.shields.io/discord/829042103295410197?color=%237289DA&label=Animavita&logo=discord&logoColor=white" alt="Discord">
-  </a>
-  <a href="http://makeapullrequest.com">
-    <img src="https://img.shields.io/badge/progress-40%25-brightgreen.svg" alt="PRs Welcome">
-  </a>
-  <a href="http://makeapullrequest.com">
-    <img src="https://img.shields.io/badge/contribuition-welcome-brightgreen.svg" alt="PRs Welcome">
-  </a>
-  <a href="https://saythanks.io/to/wendelfreitas">
-      <img src="https://img.shields.io/badge/SayThanks.io-%E2%98%BC-1EAEDB.svg">
-  </a>
-<a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." /></a>  
-</p>
+# 100% Responsivo
 
 <p align="center">
   <kbd>
@@ -48,5 +22,11 @@ SocialMap Frontend
 </p>
 
 
-# 100% Responsivo
-![](/midia/mobile_exemple.gif)
+# Rodar o projeto
+* Com o container do backend já rodando execute os códigos abaixo
+
+```shell
+$ cd SocialMap-Frontend
+$ npm install
+$ npm start
+```
