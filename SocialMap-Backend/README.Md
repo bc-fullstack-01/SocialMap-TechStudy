@@ -47,8 +47,6 @@ economizando no backend
         
 # 🎲 Para Rodar o Back End
 
-# crie um database chamado main no mongo
-
 # Docker
 * Entrar na pasta
 ```shell
@@ -63,3 +61,6 @@ $ docker-compose build
 ```shell
 $ docker-compose up
 ```
+
+* Crie um database chamado 'main' no mongodb
+

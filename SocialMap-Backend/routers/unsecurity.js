@@ -37,7 +37,7 @@ router
                             name: data.name,
                             user: data.user,
                             profile_id: data.profile._id.toString(),
-                            following: data.profile.following,
+                            midia: data.profile.midia,
                         }, ACCESS_TOKEN_SECRET)
                     }
                     passwordHash ? res.status(201).json(token) : next(createError(401))
