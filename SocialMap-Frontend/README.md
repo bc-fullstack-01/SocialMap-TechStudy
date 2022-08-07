@@ -1,4 +1,4 @@
-<h1 align="center">
+<!-- <h1 align="center">
   SocialMap Frontend
 </h1>
 
@@ -45,4 +45,4 @@
 $ cd SocialMap-Frontend
 $ npm install
 $ npm start
-```
+``` -->

@@ -1,15 +1,13 @@
-<h1 align="center">
-  SocialMap
+<!-- <h1 align="center">
+  <img alt="NextLevelWeek" title="#NextLevelWeek" src="./midias/logo6.png"/>
 </h1>
+
 
 - [x] API Backend
 - [x] Frontend Web
 - [x] Frontend Mobile
 
 
-<h1 align="center">
-  <img alt="NextLevelWeek" title="#NextLevelWeek" src="./midias/logo6.png"/>
-</h1>
 
 
 <p align="center">
@@ -56,4 +54,4 @@ $ npm start
 ```shell
 $ cd SocialMap-Mobile
 
-```
+``` -->
