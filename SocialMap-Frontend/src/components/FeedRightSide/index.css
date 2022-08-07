@@ -1,0 +1,44 @@
+.ProfileSideRight {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    overflow: auto;
+    border-left: 2px solid var(--hrColor);
+}
+
+.ProfileSideRight .card {
+    background-color: #EFF1F1;
+    border-radius: 10px;
+    margin: 5%;
+    padding: 5px 15px 5px 15px;
+
+}
+
+.card .title {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+.ProfileSideRight .cardFollower {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.ProfileSideRight .cardFollower button {
+    height: 25px;
+    background-image: linear-gradient(90deg, #2c0749 0%, #3F53B5 99%);
+
+}
+
+
+.ProfileSideRight::-webkit-scrollbar {
+    background-image: linear-gradient(180deg, #2c0749 0%, #3F53B5 99%);
+    box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+    border-radius: 100px;
+    width: 10px;
+}

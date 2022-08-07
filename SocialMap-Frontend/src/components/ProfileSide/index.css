@@ -1,0 +1,11 @@
+.ProfileSide{
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    overflow: auto;
+    border-right: 2px solid  var(--hrColor);
+
+}

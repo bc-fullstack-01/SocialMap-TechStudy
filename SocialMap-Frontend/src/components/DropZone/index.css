@@ -1,0 +1,31 @@
+.DropImage{
+    border-radius: 15px;
+    border:2px dashed black;
+    border-style: dotted;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+}
+
+.DropImageWithImage{
+    border-radius: 15px;
+    border:2px dashed black;
+    border-style: dotted;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px; 
+}
+
+.imageSelected{
+    max-width:95%;
+    max-height:95%;
+    width: auto;
+    height: auto;
+    padding: 0 auto 0 auto;
+    border-radius: 20px;
+}
+

@@ -1,0 +1,45 @@
+.loginBoxRegister {
+    height: 380px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.loginButton {
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: #1775ee;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.loginButton:focus {
+    outline: none;
+}
+
+.loginButton:disabled {
+    cursor: not-allowed;
+}
+
+.linkButton {
+    display: flex;
+    justify-content: center;
+}
+
+.loginRegisterButton {
+    width: 60%;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: #42b72a;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}

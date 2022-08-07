@@ -1,0 +1,16 @@
+.cardPerfilTwo{
+    display: block;
+    margin-bottom: 15px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.cardPerfilTwo hr{
+    margin:0;
+}
+
+.cardPerfilTwo button{
+    width: 70%;
+    margin: 10px 0 10px 0;
+}

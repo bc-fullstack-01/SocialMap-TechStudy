@@ -1,0 +1,43 @@
+li.dropdownAlert {
+    display: inline-block
+}
+
+.dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.dropdownAlert:hover .dropbtn {
+    background-color: rgba(180, 180, 180, 0.315);
+}
+
+.dropdownAlert-content {
+    display: none;
+    position: relative;
+    min-width: 50px;
+    right: 10px;
+    top: 100px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdownAlert-content button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    margin: auto;
+}
+
+
+.dropdownAlert:hover .dropdownAlert-content {
+    display: block;
+}
+.dropdownAlert:hover {
+    display: block;
+}

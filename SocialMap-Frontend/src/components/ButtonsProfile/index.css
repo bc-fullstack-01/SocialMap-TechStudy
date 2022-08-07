@@ -1,0 +1,27 @@
+.comands-profile-self {
+    display: flex;
+    justify-content: space-around;
+}
+
+.comands-profile-self button {
+    width: 30%;
+    height: 30px;
+}
+
+
+.comands-profile-other{
+    display: flex;
+    width: 40%;
+    justify-content: center;
+}
+.comands-profile-other button {
+    width: 75%;
+    height: 30px;
+}
+
+@media (max-width: 420px) {
+    .comands-profile-self {
+        justify-content: space-between;
+        margin: 0 5% 0 5%;
+    }
+}

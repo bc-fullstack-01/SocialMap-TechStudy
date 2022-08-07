@@ -1,0 +1,45 @@
+.Home {
+    position: relative;
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    gap: 1rem;
+    column-gap: 0;
+}
+
+
+.midDiv {
+    width: 100%;
+    justify-content: center;
+    margin: 32px 0px 0px 0px;
+    border: 0px;
+    min-width: 300px;
+}
+
+
+@media (min-width: 1500px) {
+    .Home {
+        grid-template-columns: 370px auto 370px;
+    }
+}
+
+@media (max-width: 850px) {
+    .Home {
+        grid-template-columns: 30% 70% 0%;
+    }
+}
+
+
+@media (max-width: 550px) {
+    .Home {
+        /* grid-template-columns: 0% 100% 0%; */
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .ProfileSide{
+        width: 100%;
+        position: inherit;
+        height: auto;
+
+    }
+}
