@@ -7,7 +7,7 @@ const cors = require("cors")
 const fs = require('fs')
 const path = require('path')
 const swaggerUi = require('swagger-ui-express');
-
+ 
 // Files import
 const Middles = require('./middlewares/securityMiddle');
 const { addPublishInReq } = require('./middlewares/rabbitMiddwares');
