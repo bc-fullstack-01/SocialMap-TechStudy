@@ -2,8 +2,8 @@ import React, { ReactElement, useReducer } from "react";
 import * as SecureStore from 'expo-secure-store'
 
 import server from "../api/server";
-
 import { Post } from "../models/Post";
+
 
 interface Action {
     type: string;
@@ -18,26 +18,25 @@ interface IPostContext {
 
 const defaultValue = { posts: [], errorMessage: null };
 
-
 const Context = React.createContext<IPostContext>(defaultValue);
 
+const reducer = (state: any, action: Action) => {
+    switch (action.type) {
+        case "show_posts":
+            return { ...state, posts: action.payload };
+        case "add_error":
+            return { ...state, errorMessage: action.payload }
+    }
+};
+
 const Provider = ({ children }: { children: ReactElement }) => {
-
-    const reducer = (state: any, action: Action) => {
-        switch (action.type) {
-            case "show_posts":
-                return { ...state, posts: action.payload };
-            case "add_error":
-                return { ...state, errorMessage: action.payload }
-        }
-    };
-
     const [state, dispatch] = useReducer(reducer, defaultValue);
+
 
     const getPosts = (dispatch: any) => async () => {
         try {
             const token = await SecureStore.getItemAsync("token")
-            const response = await server.get("/feed", {
+            const response = await server.get("/feed?page=0", {
                 headers: {
                     authorization: `Bearer ${token}`,
                 }
@@ -52,12 +51,8 @@ const Provider = ({ children }: { children: ReactElement }) => {
     }
 
     return (
-        <Context.Provider
-            value={{
-                ...state,
-                getPosts: getPosts(dispatch)
-            }}
-        >{children}
+        <Context.Provider value={{ ...state, getPosts: getPosts(dispatch) }}>
+            {children}
         </Context.Provider>
     )
 }

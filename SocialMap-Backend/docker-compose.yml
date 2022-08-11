@@ -16,20 +16,14 @@ services:
     networks:
       - mynet
 
-  mc: 
+  mc:
     image: minio/mc
     container_name: mc
     network_mode: host
     depends_on:
       - minio
     entrypoint: >
-      /bin/sh -c "
-      /usr/bin/mc config host add --api s3v2 minio http://localhost:9000/  ednoAlmeida sysMapCamp;
-      /usr/bin/mc rm -r --force minio/first-bucket;
-      /usr/bin/mc mb -p minio/first-bucket;
-      /usr/bin/mc policy set public minio/first-bucket;
-      /usr/bin/mc admin trace minio -a --debug;
-      "
+      /bin/sh -c " /usr/bin/mc config host add --api s3v2 minio http://${HOST}:9000/  ednoAlmeida sysMapCamp; /usr/bin/mc rm -r --force minio/first-bucket; /usr/bin/mc mb -p minio/first-bucket; /usr/bin/mc policy set public minio/first-bucket; /usr/bin/mc admin trace minio -a --debug; "
 
   mongodbsocial:
     image: mongo:latest
@@ -38,7 +32,6 @@ services:
       - 27017:27017
     networks:
       - mynet
-
 
   rabbitmq:
     image: rabbitmq:3.8-management-alpine
@@ -52,7 +45,6 @@ services:
     networks:
       - mynet
 
-
   backend:
     restart: always
     build:
@@ -64,11 +56,12 @@ services:
       - mongodbsocial
       - minio
     environment:
+      HOST: ${HOST}
       PORT: 4000
       AMQP_URL: amqp://guest:guest@rabbitmq:5672
       MONGO_URL: mongodb://mongodbsocial:27017/mydb
       ACCESS_TOKEN_SECRET: thisismytoken
-      BUCKET_HOST: http://localhost:9000/
+      BUCKET_HOST: http://${HOST}:9000/
       BUCKET_ENDPOINT: http://minio:9000/
       BUCKET_ACCESS_KEY: ednoAlmeida
       BUCKET_SECRET_KEY: sysMapCamp
@@ -81,6 +74,3 @@ services:
 networks:
   mynet:
     driver: bridge
-
-
-

@@ -11,8 +11,6 @@ const handleSocket = require('./middlewares/websocket');
 // setup
 setRabbit()
 
-// variables
-const PORT = process.env.PORT || 3000
 
 // Websocket
 const liveData = io.of("/v1")
@@ -23,13 +21,16 @@ liveData.on("connection", handleSocket.handleEvents)
 Subscription.receiveMsgAndAlertSocket(liveData.sockets, io);
 
 
+// LINK TO SERVICES
+const PORT = process.env.PORT || 3000
+const HOST = process.env.HOST || 'localhost'
 ports = `
 ------------------- ROUTERS -----------------------------
-Api in           = http://0.0.0.0:${PORT}
-RabbitMQ in      = http://0.0.0.0:15672/
-MongoDb in       = http://0.0.0.0:27017/
-Storage FIles in = http://0.0.0.0:9001/login
-Documentation in = http://0.0.0.0:${PORT}/api-docs
+Api in           = http://${HOST}:${PORT}
+RabbitMQ in      = http://${HOST}:15672/
+MongoDb in       = http://${HOST}:27017/
+Storage FIles in = http://${HOST}:9001/login
+Documentation in = http://${HOST}:${PORT}/api-docs
 -------------------- LOGIN ------------------------------
 Login = admin@gmail.com
 Senha = admin123

@@ -28,7 +28,7 @@ function saveFileInBucketS3(req, res, next) {
             Body: req.file.buffer
         })).then(() => {
             req.body.image = true
-            req.body.midia = `${process.env.BUCKET_HOST || config.endpoint}${bucketName}/${filename}`
+            req.body.midia = `${bucketName}/${filename}`
             return next()
         }).catch((err => {
             next(err)

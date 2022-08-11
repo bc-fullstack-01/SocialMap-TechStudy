@@ -12,7 +12,7 @@ export default function PostListScreen() {
     const { posts, errorMessage, getPosts } = useContext(PostContext);
 
     useEffect(() => {
-        getPosts();
+        getPosts? getPosts() : ''
     }, [])
 
     return (

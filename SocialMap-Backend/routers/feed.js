@@ -14,6 +14,8 @@ router
             .skip((req.query.page || 0) * 10)
             .sort({ createdAt: 'desc' })
         )
+        .then((data) => data.map(post => ({ ...post, midia: (post.midia ? `${process.env.BUCKET_HOST}${post.midia}` : post.midia) })))
+        .then((data) => console.log(data))
         .then((data) => res.status(200).json(data))
         .catch(err => next(err))
     )
@@ -21,7 +23,7 @@ router
 router
     .route("/profile/:id")
     .get((req, res, next) => Promise.resolve()
-        .then(() => Post.find({profile:req.params.id}).populate('profile'))
+        .then(() => Post.find({ profile: req.params.id }).populate('profile'))
         .then((data) => res.status(200).json(data))
         .catch(err => next(err))
     )

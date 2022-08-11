@@ -1,16 +1,16 @@
 const express = require("express");
+const swaggerUi = require('swagger-ui-express');
+const createError = require("http-errors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
-const createError = require("http-errors");
 const helmet = require("helmet");
+const path = require('path')
 const cors = require("cors")
 const fs = require('fs')
-const path = require('path')
-const swaggerUi = require('swagger-ui-express');
  
 // Files import
-const Middles = require('./middlewares/securityMiddle');
 const { addPublishInReq } = require('./middlewares/rabbitMiddwares');
+const Middles = require('./middlewares/securityMiddle');
 const routers = require("./routers");
 
 // Variables
@@ -23,7 +23,7 @@ const app = express();
 
 // Middlewares
 app.use(cors())
-app.use(helmet());
+// app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 // app.use(logger(process.env.DEV || "dev", { stream: morganLogPath }));
 app.use(express.static(path.join(__dirname, "public")))

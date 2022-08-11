@@ -6,9 +6,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import {MaterialIcons} from '@expo/vector-icons'
 
+import HomeNavigationScreen from "./screens/HomeNavigationScreen";
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import HomeScreen from './screens/HomeScreen';
 import PostScreen from './screens/PostScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import ProfilesScreen from './screens/ProfilesScreen';
@@ -27,9 +27,9 @@ function logWarning(...warnings) {
   });
   if (showWarning) warn(...warnings);
 }
-
-
 console.warn = logWarning;
+
+
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -75,7 +75,7 @@ const App = () => {
                   headerShown: false,
                 })}
               >
-                <Tab.Screen name='Home' component={HomeScreen}></Tab.Screen>
+                <Tab.Screen name='Home' component={HomeNavigationScreen}></Tab.Screen>
                 <Tab.Screen name='Profiles' component={ProfilesScreen}></Tab.Screen>
                 <Tab.Screen name='Profile' component={ProfileScreen}></Tab.Screen>
               </Tab.Navigator>
