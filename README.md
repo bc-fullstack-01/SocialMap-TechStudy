@@ -8,8 +8,6 @@
 - [x] Frontend Mobile
 
 
-
-
 <p align="center">
   <kbd>
     <img width="250" style="border-radius: 5px" height="450" src="./midias/mobile_exemple.gif" alt="Intro">
@@ -38,19 +36,35 @@ $ git clone https://github.com/bc-fullstack-01/EdnoAlmeida-ProjetoFinal.git
 $ cd EdnoAlmeida-ProjetoFinal
 ```
 
-## Inicie o container do Backend
+## Iniciar o Backend
+
 ```shell
 $ cd SocialMap-Backend
-$ docker-compose build
-$ docker-compose up
 ```
-* OBS: Cuidado com os possíveis erros causados por nomes genéricos nos containers como 'mongodb'. Você pode precisar renomeá-los.
 
 - No arquivo .env, mude o valor da variável HOTS para o host da sua rede
-  
+
 ```js
 HOST=SUA_REDE
 ```
+
+
+### Inicie o container do Backend
+* OBS: Cuidado com os possíveis erros causados por nomes genéricos nos containers como 'mongodb'. Você pode precisar renomeá-los.
+```shell
+$ docker-compose build
+$ docker-compose up
+```
+
+
+
+- No arquivo app.js pode ser necessário comentar a linha que invoca o middlware helmet.
+```js
+// Middlewares
+app.use(cors())
+app.use(helmet());
+```
+
 - Para popular o banco de dados para fins de teste faça um get na rota a baixo, simplesmente colando esse endereço no navegador. Com o backend rodando é claro.
 ```sh
 http://SUA_REDE:4000/v1/dev/seed
@@ -60,19 +74,22 @@ http://SUA_REDE:4000/v1/dev/seed
 ```shell
 $ cd SocialMap-Frontend
 $ npm install
-$ npm start
 ```
-- Mudar o valor no arquivo constante.ts para o host da sua internet
+
+### Mudar o valor no arquivo constante.ts para o host da sua internet
+  * OBS: O projeto React usa a porta 3000 que é bem comum, caso haja algum programa rodando nessa porta você deve alterar uma das duas.
   
 ```js
 const CONSTANTS = {
-    API_HOST: 'http://SUA_REDE/v1',
-    SOCKET_HOST: 'http://SUA_REDE/v1'
+    API_HOST: 'http://SUA_REDE:4000/v1',
+    SOCKET_HOST: 'http://SUA_REDE:4000/v1'
 }
 ```
 
-* OBS: O projeto React usa a porta 3000 que é bem comum, caso haja algum programa rodando nessa porta você deve alterar uma das duas.
-  
+```shell
+$ npm start
+```
+
 ## Inicie o projeto Mobile
 ```shell
 $ cd SocialMap-Mobile

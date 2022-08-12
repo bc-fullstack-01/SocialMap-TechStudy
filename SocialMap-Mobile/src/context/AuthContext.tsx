@@ -97,7 +97,7 @@ const Provider = ({ children }: { children: ReactElement }) => {
             const user = await AsyncStorage.getItem("user")
             const name = await AsyncStorage.getItem("name")
             const midia = await AsyncStorage.getItem("midia")
-            console.log(token, profile_id, user, name, midia)
+            // console.log('loginStorage',token, profile_id, user, name, midia)
             dispatch({
                 type: "login", payload: { token, profile_id, user, name, midia }
             })

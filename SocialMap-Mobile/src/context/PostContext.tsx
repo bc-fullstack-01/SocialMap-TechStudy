@@ -1,5 +1,5 @@
 import React, { ReactElement, useReducer } from "react";
-import * as SecureStore from 'expo-secure-store'
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 import server from "../api/server";
 import { Post } from "../models/Post";
@@ -35,14 +35,17 @@ const Provider = ({ children }: { children: ReactElement }) => {
 
     const getPosts = (dispatch: any) => async () => {
         try {
-            const token = await SecureStore.getItemAsync("token")
-            const response = await server.get("/feed?page=0", {
+            const token = await AsyncStorage.getItem("accessToken")
+            const page = 0
+            const response = await server.get(`/feed?page&=${page}`, {
                 headers: {
                     authorization: `Bearer ${token}`,
                 }
             })
+            // console.log('getPosts',response.data)
             dispatch({ type: "show_posts", payload: response.data })
         } catch (error) {
+            console.log(error)
             dispatch({
                 type: "add_error",
                 payload: "Houve um erro ao carregar o feed",

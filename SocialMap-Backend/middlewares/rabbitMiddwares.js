@@ -10,9 +10,6 @@ async function addPublishInReq(req, res, next) {
         }
         next()
     } catch (err) {
-        console.log('erro publish rabbit')
-
-        console.log(err)
         next(err)
     }
 }

@@ -3,21 +3,21 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
-import {MaterialIcons} from '@expo/vector-icons'
-
-import HomeNavigationScreen from "./screens/HomeNavigationScreen";
-import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import PostScreen from './screens/PostScreen';
-import ProfileScreen from './screens/ProfileScreen';
-import ProfilesScreen from './screens/ProfilesScreen';
-import CreatePostScreen from './screens/CreatePostScreen';
-
-import { Provider as AuthProvider, Context as AuthContext } from './context/AuthContext';
-import { Provider as PostProvider } from "./context/PostContext"
-import { navigationRef } from './RootNavigation';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { RootSiblingParent } from 'react-native-root-siblings';
+import { MaterialIcons } from '@expo/vector-icons'
+
+import HomeNavigationScreen from "./src/screens/HomeNavigationScreen";
+import LoginScreen from './src/screens/LoginScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
+import PostScreen from './src/screens/PostScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+import ProfilesScreen from './src/screens/ProfilesScreen';
+import CreatePostScreen from './src/screens/CreatePostScreen';
+
+import { Provider as AuthProvider, Context as AuthContext } from './src/context/AuthContext';
+import { Provider as PostProvider } from "./src/context/PostContext"
+import { navigationRef } from './RootNavigation';
 
 const warn = console.warn;
 function logWarning(...warnings) {
@@ -45,41 +45,39 @@ const App = () => {
   return (
     <SafeAreaProvider>
 
-      <NavigationContainer ref={navigationRef}>
-        {isLoading ? null :
-          !token ?
-            (
-              <Stack.Navigator
-                screenOptions={({ route, navigation }) => ({
-                  headerShown: false
-                })}
-              >
-                <Stack.Screen name='Login' component={LoginScreen} />
-                <Stack.Screen name='Register' component={RegisterScreen} />
-              </Stack.Navigator>
-            )
-            :
-            (
-              <Tab.Navigator
-                screenOptions={({ route }) => ({
-                  tabBarIcon: ({ color, size }) => {
-                    switch (route.name) {
-                      case "Home":
-                        return (<MaterialIcons name="home" size={size} color={color} />)
-                      case "Profiles":
-                        return (<MaterialIcons name="groups" size={size} color={color} />)
-                      case "Profile":
-                        return (<MaterialIcons name="account-circle" size={size} color={color} />)
-                    }
-                  },
-                  headerShown: false,
-                })}
-              >
-                <Tab.Screen name='Home' component={HomeNavigationScreen}></Tab.Screen>
-                <Tab.Screen name='Profiles' component={ProfilesScreen}></Tab.Screen>
-                <Tab.Screen name='Profile' component={ProfileScreen}></Tab.Screen>
-              </Tab.Navigator>
-            )
+      <NavigationContainer ref={navigationRef} theme={NavigationTheme}>
+        {isLoading ? null : !token ? (
+          <Stack.Navigator
+            screenOptions={({ route, navigation }) => ({
+              headerShown: false
+            })}
+          >
+            <Stack.Screen name='Login' component={LoginScreen} />
+            <Stack.Screen name='Register' component={RegisterScreen} />
+          </Stack.Navigator>
+        )
+          :
+          (
+            <Tab.Navigator
+              screenOptions={({ route }) => ({
+                tabBarIcon: ({ color, size }) => {
+                  switch (route.name) {
+                    case "Home":
+                      return (<MaterialIcons name="home" size={size} color={color} />)
+                    case "Profiles":
+                      return (<MaterialIcons name="groups" size={size} color={color} />)
+                    case "Profile":
+                      return (<MaterialIcons name="account-circle" size={size} color={color} />)
+                  }
+                },
+                headerShown: false,
+              })}
+            >
+              <Tab.Screen name='Home' component={HomeNavigationScreen}></Tab.Screen>
+              <Tab.Screen name='Profiles' component={ProfilesScreen}></Tab.Screen>
+              <Tab.Screen name='Profile' component={ProfileScreen}></Tab.Screen>
+            </Tab.Navigator>
+          )
         }
       </NavigationContainer>
 
@@ -107,3 +105,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+const NavigationTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    text: 'black',
+    primary: 'rgb(255, 45, 85)',
+  },
+};

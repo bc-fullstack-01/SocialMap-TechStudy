@@ -4,10 +4,10 @@
     "slug": "SOcialMap-Dev",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/parrot.png",
+    "icon": "./src/assets/parrot.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/parrot.png",
+      "image": "./src/assets/parrot.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,12 +22,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/parrot.png",
+        "foregroundImage": "./src/assets/parrot.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/parrot.png"
+      "favicon": "./src/assets/parrot.png"
     }
   }
 }
