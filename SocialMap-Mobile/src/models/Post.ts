@@ -9,4 +9,5 @@ export interface Post {
     profile: Profile;
     comments: Comment[];
     likes: string[];
+    liked?: boolean
 }

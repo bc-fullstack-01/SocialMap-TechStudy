@@ -36,7 +36,7 @@ const Tab = createBottomTabNavigator()
 
 const App = () => {
   const { token, loginStorage, isLoading } = useContext(AuthContext)
-
+  
   useEffect(() => {
     loginStorage ? loginStorage() : ""
   }, [])

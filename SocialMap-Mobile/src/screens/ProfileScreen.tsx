@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { Context as AuthContext } from "../context/AuthContext"
+import { Button } from "@rneui/base";
 
-export default function ProfileScreen (){
+export default function ProfileScreen() {
+    const { logout, errorMessage } = useContext(AuthContext)
+
+
     return (
-        <View>
+        <View style={styles.container}>
             <Text>ProfileScreen</Text>
-        </View>
+            <Button
+                title="Sair"
+                onPress={() => logout()}
+            ></Button>        
+            </View>
     )
 }
 
-const style = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        marginTop: 50,
+    }
+})

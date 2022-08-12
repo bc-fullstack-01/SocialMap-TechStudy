@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Input, Button } from "@rneui/base";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Card } from "@rneui/base";
 
 import Spacer from "./Spacer";
-import ToastPer from './Toast'
 import { Post } from '../models/Post'
 
-import CustomAvatar from "../components/CustomAvatar";
 import FaviriteIconButton from "../components/FavoriteIconButton";
+import { Context as PostContext } from "../context/PostContext";
+import CustomAvatar from "../components/CustomAvatar";
 import Utils from '../Utils'
 
 
@@ -19,9 +18,10 @@ interface IProps {
 }
 
 export default function CardPost({ post }: IProps) {
+    const { likePost, unlikePost, errorMessage } = useContext(PostContext);
+
     return (
         <TouchableOpacity>
-
             <Card>
                 <View style={style.header}>
                     <CustomAvatar name={post.profile.name} midia={post.profile.midia} />
@@ -31,7 +31,7 @@ export default function CardPost({ post }: IProps) {
                 <Text style={style.title}>{post.title}</Text>
 
                 {post.content ? (
-                        <Text style={style.text}>{post.content}</Text>
+                    <Text style={style.text}>{post.content}</Text>
                 ) : (<Spacer />)}
 
                 {post.midia ? (
@@ -44,7 +44,13 @@ export default function CardPost({ post }: IProps) {
                 <Card.Divider />
 
                 <View style={style.ActionContainer}>
-                    <FaviriteIconButton liked={false} handleLike={() => { }} />
+                    <FaviriteIconButton
+                        liked={post.liked as boolean}
+                        handleLike={() => {
+                            post.liked
+                                ? unlikePost && unlikePost(post._id)
+                                : likePost && likePost(post._id)
+                        }} />
                     <Text style={style.ActionItemStyle}>{post.likes.length}</Text>
 
                     <MaterialIcons
@@ -74,10 +80,10 @@ const style = StyleSheet.create({
     title: {
         marginLeft: 10,
         fontWeight: "bold",
-        fontSize: 17,
+        fontSize: 16,
     },
     text: {
-        fontSize: 13,
+        fontSize: 14,
         marginLeft: 10,
         marginTop: 10,
     },
@@ -85,6 +91,7 @@ const style = StyleSheet.create({
         resizeMode: "contain",
         maxHeight: 600,
         marginTop: 15,
+
     },
     ActionContainer: {
         flexDirection: "row",

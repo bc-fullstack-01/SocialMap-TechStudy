@@ -1,36 +1,42 @@
-import React, { useContext, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons';
-import { Card } from "@rneui/base";
+import React, { useContext, useEffect, useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import InfiniteScroll from 'react-native-infinite-scrolling'
+import ToastPer from '../components/Toast'
 
 import { Context as PostContext } from "../context/PostContext";
-
 import CardPost from "../components/CardPost";
-import FaviriteIconButton from "../components/FavoriteIconButton";
+import { Post } from '../models/Post'
 
-import CustomAvatar from "../components/CustomAvatar";
 
 export default function PostListScreen() {
-    const { posts, errorMessage, getPosts } = useContext(PostContext);
+    const { posts, errorMessage, errorMessageScreen, getPosts } = useContext(PostContext);
+    const [actualPage, setActualPage] = useState<number>(0)
+    // time 56:00
 
     useEffect(() => {
-        getPosts ? getPosts() : ''
-    }, [])
+        getPosts ? getPosts(actualPage) : ''
+    }, [actualPage])
+
+    const loadMore = () => {
+        setActualPage((page) => page + 1)
+    }
 
     return (
         <>
-            {errorMessage ?
-                (<View style={style.errorContainerStyle}>
-                    <Text style={style.errorMessageStyle}>{errorMessage}</Text>
-                </View>)
-                :
-                (<FlatList
+            <ToastPer msg={errorMessage as string} type={'error'} />
+
+            {!errorMessageScreen ?
+                (<InfiniteScroll
                     data={posts}
-                    keyExtractor={({ _id }) => _id}
-                    renderItem={({ item }) => (
+                    renderData={({ item }: { item: Post }) => (
                         <CardPost post={item} />
                     )}
+                    loadMore={loadMore}
                 />)
+                :
+                (<View style={style.errorContainerStyle}>
+                    <Text style={style.errorMessageStyle}>{errorMessageScreen}</Text>
+                </View>)
             }
         </>
     )

@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { Context as AuthContext } from "../context/AuthContext"
 import AuthForm from "../components/AuthForm";
+import ToastPer from '../components/Toast'
 
 interface Props {
     navigation: NativeStackNavigationProp<any, any>
@@ -29,8 +30,9 @@ export default function LoginScreen({ navigation }: Props) {
                 onSubmit={login}
                 link={link}
                 linkText="Não tem uma conta? Faça o cadastro"
-                errorMessage={errorMessage}
             />
+
+            <ToastPer msg={errorMessage as string} type={'error'} />
         </LinearGradient>
     )
 }

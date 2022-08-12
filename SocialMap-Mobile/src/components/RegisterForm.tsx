@@ -2,18 +2,12 @@ import React, { useState } from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Input, Button } from "@rneui/base";
 import Spacer from "./Spacer";
-import ToastPer from './Toast'
-
-
-import logo from "../assets/images/parrot-pngrepo-com.png"
 
 interface IProps {
     submitButtonText: string
     onSubmit: any
     link: any
     linkText: string
-    errorMessage: string | undefined
-    successfulMessage?: string | undefined
 }
 
 
@@ -21,9 +15,7 @@ export default function RegisterForm({
     submitButtonText,
     onSubmit,
     link,
-    linkText,
-    errorMessage,
-    successfulMessage }: IProps) {
+    linkText}: IProps) {
 
     const [name, setName] = useState("");
     const [user, setUser] = useState("")
@@ -84,8 +76,6 @@ export default function RegisterForm({
                 </TouchableOpacity>
             </View>
 
-            <ToastPer msg={successfulMessage} type={'success'} />
-            <ToastPer msg={errorMessage} type={'error'} />
         </>
     )
 }

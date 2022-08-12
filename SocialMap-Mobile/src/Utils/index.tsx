@@ -21,11 +21,18 @@ function getFistsNames(names: string, qtd: number) {
     return names.split(" ").slice(0, qtd).map((names) => names[0]).join().replace(",", "");
 }
 
+const setMessagensContext = (dispatch: any, type: string, menssage: string, other: any = {}) => {
+    dispatch({ ...other, type: type, payload: menssage })
+    setTimeout(() => {
+        dispatch({ type: type, payload: "" })
+    }, 2500)
+}
 
 export default {
     splitAbout,
     fistToUpperCase,
     capitalizeFirstLetter,
     randomNumber,
-    getFistsNames
+    getFistsNames,
+    setMessagensContext
 }

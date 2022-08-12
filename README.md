@@ -62,7 +62,7 @@ $ docker-compose up
 ```js
 // Middlewares
 app.use(cors())
-app.use(helmet());
+//app.use(helmet());
 ```
 
 - Para popular o banco de dados para fins de teste faça um get na rota a baixo, simplesmente colando esse endereço no navegador. Com o backend rodando é claro.

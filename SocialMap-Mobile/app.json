@@ -28,6 +28,9 @@
     },
     "web": {
       "favicon": "./src/assets/parrot.png"
-    }
+    },
+    "plugins": [
+      "expo-image-picker"
+    ]
   }
 }

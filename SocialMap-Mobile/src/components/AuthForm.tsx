@@ -2,24 +2,20 @@ import React, { useState } from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Input, Button } from "@rneui/base";
 import Spacer from "./Spacer";
-import ToastPer from './Toast'
 
-import logo from "../assets/images/parrot-pngrepo-com.png"
 
 interface Props {
     submitButtonText: string
     onSubmit: any
     link: () => void
     linkText: string
-    errorMessage: string | undefined
 }
 
 export default function AuthForm({
     submitButtonText,
     onSubmit,
     link,
-    linkText,
-    errorMessage }: Props) {
+    linkText }: Props) {
     const [user, setUser] = useState("")
     const [password, setPassword] = useState("")
 
@@ -63,7 +59,6 @@ export default function AuthForm({
                 </TouchableOpacity>
             </View>
 
-            <ToastPer msg={errorMessage} type={'error'} />
         </View>
     )
 }
