@@ -1,3 +1,5 @@
+import { Dimensions } from 'react-native';
+
 function splitAbout(text: String, words: number = 12) {
     if (text.split(' ').length <= words) return text
     var newText = text.split(' ').slice(0, words)
@@ -27,6 +29,12 @@ const setMessagensContext = (dispatch: any, type: string, menssage: string, othe
         dispatch({ type: type, payload: "" })
     }, 2500)
 }
+
+const getScreen = () => {
+    const {height, width} = Dimensions.get('screen')
+
+}
+
 
 export default {
     splitAbout,

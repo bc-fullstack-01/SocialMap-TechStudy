@@ -4,8 +4,10 @@ import InfiniteScroll from 'react-native-infinite-scrolling'
 import ToastPer from '../components/Toast'
 
 import { Context as PostContext } from "../context/PostContext";
+import ProfileCard from "../components/ProfileCard";
 import CardPost from "../components/CardPost";
 import { Post } from '../models/Post'
+import { ButtonsProfileSelf } from '../components/ButtonsProfile'
 
 
 export default function PostListScreen() {
@@ -24,6 +26,10 @@ export default function PostListScreen() {
     return (
         <>
             <ToastPer msg={errorMessage as string} type={'error'} />
+            <ProfileCard >
+                <ButtonsProfileSelf />
+            </ProfileCard >
+
 
             {!errorMessageScreen ?
                 (<InfiniteScroll

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as ImagerPicker from "expo-image-picker"
-import { Button } from "@rneui/base";
 
 import { File } from "../models/File"
 import Spacer from "./Spacer"
@@ -17,7 +16,6 @@ interface IProps {
 
 export default function ImagePicker({ onFileLoaded }: IProps) {
     const [image, setImage] = useState(null)
-    console.log(image)
 
     const pickImage = async () => {
         let result = await ImagerPicker.launchImageLibraryAsync({
@@ -32,21 +30,24 @@ export default function ImagePicker({ onFileLoaded }: IProps) {
             console.log(result)
             setImage(uri)
             const name = uri.match(/[^\\/]+$/)[0]
-            const file = { name, uri, type: "image/jpg", data: result.data }
+            const file = { name, uri, type: "image/jpg" }
             onFileLoaded(file)
         }
     }
 
     return (
         <>
-            <Button style={styles.imagePicker} title="Selecionar Imagem" onPress={pickImage} />
-            {image && (
-                <View style={styles.container}>
-                    <Spacer>
-                        <Image source={{ uri: image }} style={styles.image} />
-                    </Spacer>
+            <TouchableOpacity onPress={pickImage}>
+                <View style={styles.imagePickerDiv}>
+                    {image ? (
+                        <Image source={{ uri: image }} style={styles.image} resizeMethod="scale"/>
+                    ) : (
+                        <Text onPress={pickImage}>Selecionar Imagem</Text>
+                    )}
                 </View>
-            )}
+            </TouchableOpacity>
+
+
         </>
     )
 }
@@ -56,15 +57,27 @@ export default function ImagePicker({ onFileLoaded }: IProps) {
 const styles = StyleSheet.create({
     container: {
         alignItems: "center",
-        justifyContent: "center"
-    },
-    imagePicker: {
-        alignItems: "center",
         justifyContent: "center",
-        width: "33%"
+    },
+    imagePickerDiv: {
+        minHeight: 85,
+        maxHeight: 420,
+        justifyContent: "center",
+        alignItems: "center",
+
+        paddingBottom: 15,
+        paddingTop: 15,
+
+        borderRadius: 10,
+        borderStyle: "dotted",
+        borderColor: 'black',
+        borderWidth: 2,
     },
     image: {
-        alignItems: "center",
-        justifyContent: "center"
+        borderRadius: 10,
+        width: 320,
+        height: 240,
+
+        // objectFit: "fill",
     }
 })

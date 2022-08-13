@@ -107,7 +107,7 @@ const Provider = ({ children }: { children: ReactElement }) => {
             data.append('title', title)
             data.append('content', content)
             file ? data.append('file', file) : ''
-            console.log(data)
+            console.log(file)
             const response = await server.auth(token as string).post(`/posts`, data)
             console.log(response)
             Utils.setMessagensContext(dispatch, "successfulMessage", "Post criado com sucesso!");

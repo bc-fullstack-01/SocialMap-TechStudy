@@ -8,17 +8,19 @@ interface Props {
     name: string
     midia?: string
     link?: any
+    size?: string | number
+    style?: any
 }
 
-export default function CustomAvatar({ name, midia, link }: Props) {
+export default function CustomAvatar({ name, midia, link, style={}, size='small' }: Props) {
     if (midia) {
         return (
             <Avatar
-                size="small"
+                size={size}
                 source={{ uri: midia }}
                 rounded
                 onPress={() => console.log("Works!")}
-                containerStyle={style.AvatarStyle}
+                containerStyle={{...style.AvatarStyle, ...style}}
 
             />
         )
@@ -27,10 +29,10 @@ export default function CustomAvatar({ name, midia, link }: Props) {
 
         return (
             <Avatar
-                size="small"
+                size={size}
                 rounded
                 title={initials}
-                containerStyle={style.AvatarStyle}
+                containerStyle={{...style.AvatarStyle, ...style}}
             />
         )
     }
