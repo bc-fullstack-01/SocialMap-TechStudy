@@ -19,7 +19,7 @@ export const ButtonsProfileSelf = () => {
                 radius={12}
                 buttonStyle={styles.buttom}
                 color='error'
-                title="Sair"
+                title="Logout"
                 onPress={() => logout()}
             />
 

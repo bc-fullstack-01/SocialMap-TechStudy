@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { MaterialIcons } from '@expo/vector-icons'
 
@@ -36,7 +36,7 @@ const Tab = createBottomTabNavigator()
 
 const App = () => {
   const { token, loginStorage, isLoading } = useContext(AuthContext)
-  
+
   useEffect(() => {
     loginStorage ? loginStorage() : ""
   }, [])
@@ -90,7 +90,15 @@ export default () => {
     <RootSiblingParent>
       <AuthProvider>
         <PostProvider>
-          <App />
+          <>
+            <StatusBar
+              animated={true}
+              backgroundColor="black"
+              barStyle='light-content'
+              showHideTransition={'fade'}
+            />
+            <App />
+          </>
         </PostProvider>
       </AuthProvider>
     </RootSiblingParent>
@@ -110,7 +118,9 @@ const NavigationTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    text: 'black',
-    primary: 'rgb(255, 45, 85)',
+    text: 'white',
+    card: '#3F51B5',
+    primary: 'white',
+    notification: 'white',
   },
 };

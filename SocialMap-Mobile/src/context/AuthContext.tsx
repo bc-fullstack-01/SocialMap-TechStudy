@@ -5,6 +5,8 @@ import jwtDecode from "jwt-decode";
 import { Action } from "../models/Actions"
 import server from "../api/server";
 import Utils from "../Utils"
+import { Profile } from '../models/Profile'
+import Cover from "../assets/backgroundPerfil";
 
 
 interface TokenUser {
@@ -30,13 +32,25 @@ interface IAuthContext {
     profile_id: string | null
     name?: string
     midia?: string | null
+    profile: Profile,
     errorMessage?: string
     successfulMessage?: string
     isLoading: boolean
+    background: any,
     login?: () => void
     register?: () => void
     loginStorage?: () => void
     logout?: () => void
+    getProfile?: () => void
+}
+
+const profileClean = {
+    _id: '',
+    name: '',
+    followers: [''],
+    following: [''],
+    posts: [''],
+    user: ''
 }
 
 const defaultValue = {
@@ -44,6 +58,8 @@ const defaultValue = {
     user: null,
     profile_id: null,
     isLoading: true,
+    profile: profileClean,
+    background: Cover[Utils.randomNumber(0, Cover.length)]
 }
 
 
@@ -57,6 +73,8 @@ const Provider = ({ children }: { children: ReactElement }) => {
                 return { ...state, ...action.payload, isLoading: false }
             case "logout":
                 return { ...state, ...action.payload, isLoading: false }
+            case "setProfile":
+                return { ...state, profile: action.payload }
             case "error":
                 return { ...state, errorMessage: action.payload }
             case "successfulMessage":
@@ -124,8 +142,19 @@ const Provider = ({ children }: { children: ReactElement }) => {
         dispatch({ type: "logout", payload: defaultValue })
     }
 
+    const getProfile = async () => {
+        const token = await AsyncStorage.getItem("accessToken")
+        const profile_id = await AsyncStorage.getItem("profile_id")
+        try {
+            const response = await server.auth(token).get(`/profiles/${profile_id}`)
+            dispatch({ type: "setProfile", payload: response.data })
+        } catch (error) {
+            Utils.setMessagensContext(dispatch, "error", "Erro na busca do perfil!")
+        }
+    }
+
     return (
-        <Context.Provider value={{ ...state, login, register, loginStorage, logout }}>
+        <Context.Provider value={{ ...state, login, register, loginStorage, logout, getProfile }}>
             {children}
         </Context.Provider>
     )

@@ -15,6 +15,7 @@ const UselessTextInput = (props) => {
         />
     );
 }
+//43:07
 
 export default function PostScreen({ route }: IPros) {
     const { post, like, unlike, createComment } = useContext(PostContext)

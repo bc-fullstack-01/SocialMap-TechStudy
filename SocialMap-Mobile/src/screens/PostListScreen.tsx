@@ -1,42 +1,53 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import InfiniteScroll from 'react-native-infinite-scrolling'
-import ToastPer from '../components/Toast'
 
 import { Context as PostContext } from "../context/PostContext";
+import { Context as AuthContext } from "../context/AuthContext";
+
+import { ButtonsProfileSelf } from '../components/ButtonsProfile'
 import ProfileCard from "../components/ProfileCard";
 import CardPost from "../components/CardPost";
+import ToastPer from '../components/Toast'
+
 import { Post } from '../models/Post'
-import { ButtonsProfileSelf } from '../components/ButtonsProfile'
 
 
 export default function PostListScreen() {
+    const { profile, getProfile, background } = useContext(AuthContext);
     const { posts, errorMessage, errorMessageScreen, getPosts } = useContext(PostContext);
     const [actualPage, setActualPage] = useState<number>(0)
-    // time 56:00
 
     useEffect(() => {
         getPosts ? getPosts(actualPage) : ''
     }, [actualPage])
 
+    useEffect(() => {
+        getProfile()
+    }, [])
+
     const loadMore = () => {
         setActualPage((page) => page + 1)
+    }
+
+    function renderList({ item }: { item: Post }) {
+        if (Object.prototype.hasOwnProperty.call(item, "followers")) {
+            return (
+                <ProfileCard profile={profile} background={background}>
+                    <ButtonsProfileSelf />
+                </ProfileCard >
+            )
+        } else return <CardPost post={item} />
     }
 
     return (
         <>
             <ToastPer msg={errorMessage as string} type={'error'} />
-            <ProfileCard >
-                <ButtonsProfileSelf />
-            </ProfileCard >
-
 
             {!errorMessageScreen ?
                 (<InfiniteScroll
-                    data={posts}
-                    renderData={({ item }: { item: Post }) => (
-                        <CardPost post={item} />
-                    )}
+                    data={[profile].concat(posts)}
+                    renderData={renderList}
                     loadMore={loadMore}
                 />)
                 :

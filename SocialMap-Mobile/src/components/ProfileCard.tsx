@@ -1,49 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, Image, Text, StyleSheet, Dimensions } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage"
 
 import { Profile } from '../models/Profile'
 
 import CustomAvatar from "../components/CustomAvatar";
 import Utils from '../Utils'
-import server from "../api/server";
-import Cover from "../assets/backgroundPerfil";
 
-const profileClean = {
-    _id: '',
-    name: '',
-    followers: [''],
-    following: [''],
-    posts: [''],
-    user: ''
-}
 
 interface IProps {
-    // profile: Profile,
+    profile: Profile,
+    background: any,
     children?: JSX.Element,
     resume?: boolean,
+    
 }
 
-export default function ProfileCard({ children, resume = true }: IProps) {
-    const [profile, setProfile] = useState<Profile>(profileClean)
-
-    useEffect(() => {
-        const getProfile = async () => {
-            const token = await AsyncStorage.getItem("accessToken")
-            const profile_id = await AsyncStorage.getItem("profile_id")
-            try {
-                const response = await server.auth(token).get(`/profiles/${profile_id}`)
-                setProfile(response.data)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getProfile()
-    }, [])
+export default function ProfileCard({ profile, children, background, resume = true }: IProps) {
 
     return (
         <View style={styles.container}>
-            <Image source={Cover[Utils.randomNumber(0, Cover.length)]} style={styles.background} />
+            <Image source={background} style={styles.background} />
             <CustomAvatar name={profile.name} midia={profile.midia} size={80} style={styles.avatar} />
 
             {children}
@@ -97,8 +73,8 @@ const styles = StyleSheet.create({
     about: {
         top: topSub,
         fontSize: 14,
-        marginLeft: 10,
         marginTop: 10,
+        marginHorizontal: 20,
     },
     background: {
         width: width,
