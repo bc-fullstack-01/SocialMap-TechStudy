@@ -7,14 +7,14 @@
 - [x] Frontend Web
 - [x] Frontend Mobile (Em desenvolvimento)
 
-## Versão WEB
+## Versão WEB (100% responsiva)
 
 <p align="center">
   <kbd>
     <img width="250" style="border-radius: 5px" height="450" src="./midias/mobile_exemple.gif" alt="Intro">
   </kbd>
   <kbd>
-    <img width="330" style="border-radius: 5px" height="450" src="./midias/profile_sysmap.png" alt="Register adopt">
+    <img width="250" style="border-radius: 5px" height="450" src="./midias/profile_sysmap.png" alt="Register adopt">
   </kbd>
   <kbd>
     <img width="250" style="border-radius: 5px" height="450" src="./midias/mobile_exemple2.gif" alt="Register adopt">
