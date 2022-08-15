@@ -44,6 +44,11 @@ services:
       - ~/.docker-conf/rabbitmq/data/:/var/log/rabbitmq
     networks:
       - mynet
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "http://localhost:15672" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     restart: always

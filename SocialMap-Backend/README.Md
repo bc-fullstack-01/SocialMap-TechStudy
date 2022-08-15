@@ -1,11 +1,6 @@
 SocialMap API
 =========
 
-# fazer
-- Ajeita o web socket
-
-
-
 ## Feactures
 <ul>
 <li>Autentificação com JWT e encriptografia de senha</li>
@@ -21,19 +16,27 @@ SocialMap API
 - Filas para cada tipo de notificação tratada
 - A seguir um esquema do funcionamento:
 <p align="center">
-<img width="450" style="border-radius: 5px" height="400" src="./midias/rabbit.gif" alt="Intro">
+<img width="450" style="border-radius: 5px" height="400" src="../midias/rabbit.gif" alt="Intro">
 </p>
 
 # Requisitos
 - Adicionar usuário do Sysmap com a descrição da empresa no inicio do feed
 
-# Personalizações
-- query no get post/:id para n pegar todos os seguidores de todo mundo que comentou
-economizando no backend
+# Principais Personalizações
+
+- Checagem do estado do container rabbitmq para iniciar o dependentes.
+```sh
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "http://localhost:15672" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+```
+- População robusta do banco de dados, atravéz do seed
+
 - Post com midia e texto
 - Usando a lib ampqlib para rabbitMQ
-- Criando exchange e filas no código
-- Adiconou o campo de posts no profile
+- Criando exchange e filas na inicialização do server
 - Usando o addToSet em vez do push para evitar duplicação de likes ou seguidores
 ```
 { $addToSet: { following: id_two }
@@ -44,23 +47,36 @@ economizando no backend
 .populate({ path: 'comments', populate: { path: 'profile', select: ['name' 'midia'] } })
 ```
 
+
         
 # 🎲 Para Rodar o Back End
 
-# Docker
-* Entrar na pasta
 ```shell
 $ cd SocialMap-Backend
 ```
-* Buildar os containers
-```shell
-$ docker-compose build
+
+- No arquivo .env, mude o valor da variável HOTS para o host da sua rede
+
+```js
+HOST=SUA_REDE
 ```
 
-* Iniciar os containers
+
+### Inicie o container do Backend
+* OBS: Cuidado com os possíveis erros causados por nomes genéricos nos containers como 'mongodb'. Você pode precisar renomeá-los.
 ```shell
+$ docker-compose build
 $ docker-compose up
 ```
 
-* Crie um database chamado 'main' no mongodb
+- No arquivo app.js pode ser necessário comentar a linha que invoca o middlware helmet.
+```js
+// Middlewares
+app.use(cors())
+//app.use(helmet());
+```
 
+- Para popular o banco de dados para fins de teste faça um get na rota a baixo, simplesmente colando esse endereço no navegador. Com o backend rodando é claro.
+```sh
+http://SUA_REDE:4000/v1/dev/seed
+```

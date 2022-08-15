@@ -30,7 +30,6 @@ module.exports = class RabbitmqServer {
         return this.channel.publish(exchange, routingKey, Buffer.from(message), {headers:headers});
     }
 
-    // inicia a fila 
     async consume(queue, callback) {
         return this.channel.consume(queue, (message) => {
             callback(message);
