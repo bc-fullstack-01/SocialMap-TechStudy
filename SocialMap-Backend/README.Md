@@ -19,9 +19,6 @@ SocialMap API
 <img width="450" style="border-radius: 5px" height="400" src="../midias/rabbit.gif" alt="Intro">
 </p>
 
-# Requisitos
-- Adicionar usuário do Sysmap com a descrição da empresa no inicio do feed
-
 # Principais Personalizações
 
 - Checagem do estado do container rabbitmq para iniciar o dependentes.
@@ -78,5 +75,5 @@ app.use(cors())
 
 - Para popular o banco de dados para fins de teste faça um get na rota a baixo, simplesmente colando esse endereço no navegador. Com o backend rodando é claro.
 ```sh
-http://SUA_REDE:4000/v1/dev/seed
+http://localhost:4000/v1/dev/seed
 ```

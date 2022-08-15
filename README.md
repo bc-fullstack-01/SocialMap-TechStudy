@@ -83,7 +83,7 @@ app.use(cors())
 
 - Para popular o banco de dados para fins de teste faça um get na rota a baixo, simplesmente colando esse endereço no navegador. Com o backend rodando é claro.
 ```sh
-http://SUA_REDE:4000/v1/dev/seed
+http://localhost:4000/v1/dev/seed
 ```
 
 ## Inicie o projeto Frontend

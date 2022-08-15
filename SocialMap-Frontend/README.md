@@ -2,34 +2,21 @@
   SocialMap Frontend
 </h1>
 
-<p align="center"> 
-  <a href="https://discord.gg/BHHz77rhb6">
-    <img src="https://img.shields.io/discord/829042103295410197?color=%237289DA&label=Animavita&logo=discord&logoColor=white" alt="Discord">
-  </a>
-  <a href="http://makeapullrequest.com">
-    <img src="https://img.shields.io/badge/progress-40%25-brightgreen.svg" alt="PRs Welcome">
-  </a>
-  <a href="http://makeapullrequest.com">
-    <img src="https://img.shields.io/badge/contribuition-welcome-brightgreen.svg" alt="PRs Welcome">
-  </a>
-  <a href="https://saythanks.io/to/wendelfreitas">
-      <img src="https://img.shields.io/badge/SayThanks.io-%E2%98%BC-1EAEDB.svg">
-  </a>
-<a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." /></a>  
-</p>
 
-
-
-# 100% Responsivo
+## Versão WEB (100% responsiva)
 
 <p align="center">
   <kbd>
     <img width="250" style="border-radius: 5px" height="450" src="../midias/mobile_exemple.gif" alt="Intro">
   </kbd>
-  &nbsp;&nbsp;&nbsp;&nbsp;
+  <kbd>
+    <img width="250" style="border-radius: 5px" height="450" src="../midias/profile_sysmap.png" alt="Register adopt">
+  </kbd>
   <kbd>
     <img width="250" style="border-radius: 5px" height="450" src="../midias/mobile_exemple2.gif" alt="Register adopt">
   </kbd>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+
 </p>
 <p align="center">
 <kbd>
@@ -37,12 +24,24 @@
 </kbd>
 </p>
 
-
 # Rodar o projeto
 * Com o container do backend já rodando execute os códigos abaixo
 
 ```shell
 $ cd SocialMap-Frontend
 $ npm install
+```
+
+### Mudar o valor no arquivo constante.ts para o host da sua internet
+  * OBS: O projeto React usa a porta 3000 que é bem comum, caso haja algum programa rodando nessa porta você deve alterar uma das duas.
+  
+```js
+const CONSTANTS = {
+    API_HOST: 'http://SUA_REDE:4000/v1',
+    SOCKET_HOST: 'http://SUA_REDE:4000/v1'
+}
+```
+
+```shell
 $ npm start
 ```
