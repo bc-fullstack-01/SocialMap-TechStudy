@@ -39,10 +39,12 @@ export default function EditProfile() {
         const token = await AsyncStorage.getItem("accessToken")
 
         const { name, about } = formData;
-        const data = { "name": name, about: about }
-        if (file) data['file'] = file
+        const data = new FormData()
+        data.append("name", name);
+        data.append("about", about);
+        if (file) data.append("file", file);
         try {
-            await server.auth(token).put('/profiles', data)
+            await server.upload(token).put('/profiles', data)
         } catch (err) {
             console.log(err)
         }

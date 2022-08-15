@@ -11,6 +11,10 @@ export default {
     noAuth: axios.create({ baseURL:CONSTANTS.API_HOST, headers }),
     auth: (token: string) => axios.create({ 
         baseURL:CONSTANTS.API_HOST, 
-        headers: { authorization: `Bearer ${token}` } 
+        headers: { ...headers, authorization: `Bearer ${token}` } 
+    }),
+    upload: (token: string) => axios.create({ 
+        baseURL:CONSTANTS.API_HOST, 
+        headers: { ...headers, authorization: `Bearer ${token}`,  "Content-Type":"multipart/form-data"} 
     })
 }

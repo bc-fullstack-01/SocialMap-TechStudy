@@ -1,14 +1,13 @@
 import React, { useContext, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Input, Button } from "@rneui/base";
-
 
 import { Context as PostContext } from "../context/PostContext";
 import ImagePicker from "../components/ImagePicker"
 import Spacer from "../components/Spacer"
 import { File } from "../models/File"
+import { ToastAuto } from "../components/Toast"
 
-//2:05:00
 
 export default function CreatePostScreen() {
     const { createPost } = useContext(PostContext)

@@ -1,11 +1,10 @@
 import React from "react";
 import { View, Image, Text, StyleSheet, Dimensions } from "react-native";
 
-import { Profile } from '../models/Profile'
-
 import CustomAvatar from "../components/CustomAvatar";
-import Utils from '../Utils'
 import Cover from "../assets/backgroundPerfil";
+import { Profile } from '../models/Profile'
+import Utils from '../Utils'
 
 
 interface IProps {
@@ -102,8 +101,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
     },
     infosDiv: {
-        alignItems: 'center'
-
+        alignItems: 'center',
+        width: '33%'
     },
     infosMid: {
         borderStyle: "solid",

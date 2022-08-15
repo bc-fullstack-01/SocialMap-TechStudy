@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Context as AuthContext } from "../context/AuthContext"
 import { Button } from "@rneui/base";
@@ -30,6 +30,8 @@ export const ButtonsProfileSelf = () => {
 
 
 export const ButtonsProfileFollow = ({ profileId }: { profileId: string }) => {
+    const [following, setFollowing] = useState<string[]>();
+
     return (
         <View style={styles.container}>
             <Button

@@ -7,8 +7,9 @@ import { ButtonsProfileFollow } from '../components/ButtonsProfile'
 import ProfileCard from "../components/ProfileCard";
 import CardPost from "../components/CardPost";
 import ToastPer from '../components/Toast'
-import server from "../api/server";
+
 import { navigate } from '../../RootNavigation';
+import server from "../api/server";
 
 import { Post } from '../models/Post'
 import { Profile } from '../models/Profile'

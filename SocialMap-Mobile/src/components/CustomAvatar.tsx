@@ -33,14 +33,14 @@ export default function CustomAvatar({ id, name, midia, style = {}, size = 'smal
                 rounded
                 title={initials}
                 onPress={() => navigate('Profile', { id: id })}
-                containerStyle={{ ...style.AvatarStyle, ...style }}
+                containerStyle={{ ...styles.AvatarStyle, ...style }}
             />
 
         )
     }
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     AvatarStyle: {
         backgroundColor: "red",
         marginRight: 0,

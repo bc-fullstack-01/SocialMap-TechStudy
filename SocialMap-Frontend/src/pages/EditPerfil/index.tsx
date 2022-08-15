@@ -73,7 +73,6 @@ const EditPerfil = () => {
         if (selectedFile) {
             data.append("file", selectedFile);
         };
-
         try {
             await server.put('/profiles', data, {
                 headers: { Authorization: `Bearer ${token}` },
