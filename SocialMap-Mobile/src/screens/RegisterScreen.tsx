@@ -1,15 +1,16 @@
 import React, { useContext, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import RegisterForm from "../components/RegisterForm";
-import { Context as AuthContext } from "../context/AuthContext"
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { LinearGradient } from 'expo-linear-gradient';
+import { StyleSheet,  } from "react-native";
+
+import { Context as AuthContext } from "../context/AuthContext"
+import RegisterForm from "../components/RegisterForm";
 import ToastPer from '../components/Toast'
+
 
 interface Props {
     navigation: NativeStackNavigationProp<any, any>
 }
-
 
 export default function RegisterScreen({ navigation }: Props) {
 

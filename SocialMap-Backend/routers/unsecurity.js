@@ -29,7 +29,6 @@ router
     .route("/login")
     .post((req, res, next) => Promise.resolve()
         .then(() => User.find({}))
-        .then(data => console.log(data))
         .then(() => User.findOne({ user: req.body.user }).populate('profile', 'midia'))
         .then(data => {
             data ? bcrypt.compare(req.body.password, data.password)

@@ -4,7 +4,7 @@ import "./HomeLauch.css";
 
 type Props = {
     children: JSX.Element,
-};
+}
 
 const HomeLauch = ({ children }: Props) => {
     return (

@@ -2,26 +2,26 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Avatar } from "@rneui/base";
 
+import { navigate } from '../../RootNavigation';
 import Utils from '../Utils'
 
 interface Props {
     name: string
+    id?: string
     midia?: string
-    link?: any
     size?: string | number
     style?: any
 }
 
-export default function CustomAvatar({ name, midia, link, style={}, size='small' }: Props) {
+export default function CustomAvatar({ id, name, midia, style = {}, size = 'small' }: Props) {
     if (midia) {
         return (
             <Avatar
                 size={size}
                 source={{ uri: midia }}
                 rounded
-                onPress={() => console.log("Works!")}
-                containerStyle={{...style.AvatarStyle, ...style}}
-
+                onPress={() => navigate('Profile', { id: id })}
+                containerStyle={{ ...style.AvatarStyle, ...style }}
             />
         )
     } else {
@@ -32,8 +32,10 @@ export default function CustomAvatar({ name, midia, link, style={}, size='small'
                 size={size}
                 rounded
                 title={initials}
-                containerStyle={{...style.AvatarStyle, ...style}}
+                onPress={() => navigate('Profile', { id: id })}
+                containerStyle={{ ...style.AvatarStyle, ...style }}
             />
+
         )
     }
 }

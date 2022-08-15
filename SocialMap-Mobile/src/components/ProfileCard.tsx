@@ -5,22 +5,24 @@ import { Profile } from '../models/Profile'
 
 import CustomAvatar from "../components/CustomAvatar";
 import Utils from '../Utils'
+import Cover from "../assets/backgroundPerfil";
 
 
 interface IProps {
     profile: Profile,
-    background: any,
+    background?: any,
     children?: JSX.Element,
     resume?: boolean,
     
 }
 
+
 export default function ProfileCard({ profile, children, background, resume = true }: IProps) {
 
     return (
         <View style={styles.container}>
-            <Image source={background} style={styles.background} />
-            <CustomAvatar name={profile.name} midia={profile.midia} size={80} style={styles.avatar} />
+            <Image source={background ? background: Cover[Utils.randomNumber(0, Cover.length)]} style={styles.background} />
+            <CustomAvatar id={profile._id} name={profile.name} midia={profile.midia} size={80} style={styles.avatar} />
 
             {children}
 

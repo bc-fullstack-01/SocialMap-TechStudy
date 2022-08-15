@@ -7,9 +7,10 @@ const headers = {
 }
 
 export default {
+    default: axios.create({ baseURL:CONSTANTS.API_HOST}),
     noAuth: axios.create({ baseURL:CONSTANTS.API_HOST, headers }),
     auth: (token: string) => axios.create({ 
         baseURL:CONSTANTS.API_HOST, 
-        headers: { ...headers, authorization: `Bearer ${token}` } 
+        headers: { authorization: `Bearer ${token}` } 
     })
 }

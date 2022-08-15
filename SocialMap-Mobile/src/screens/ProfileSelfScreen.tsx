@@ -1,46 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
-import InfiniteScroll from 'react-native-infinite-scrolling'
+import React, { useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import InfiniteScroll from 'react-native-infinite-scrolling'
+import {  StyleSheet } from "react-native";
 
-import { ButtonsProfileFollow } from '../components/ButtonsProfile'
+import { Context as AuthContext } from "../context/AuthContext";
+
+import { ButtonsProfileSelf } from '../components/ButtonsProfile'
 import ProfileCard from "../components/ProfileCard";
 import CardPost from "../components/CardPost";
 import ToastPer from '../components/Toast'
+
 import server from "../api/server";
-import { navigate } from '../../RootNavigation';
-
 import { Post } from '../models/Post'
-import { Profile } from '../models/Profile'
-
-const profileClean = {
-    _id: '',
-    name: '',
-    followers: [''],
-    following: [''],
-    posts: [''],
-    user: ''
-}
 
 
-export default function ProfileScreen({ route }: { route: any }) {
-    const { id } = route.params;
-    const [profile, setProfile] = useState<Profile>(profileClean);
+export default function ProfileSelfScreen() {
+    const { profile, getProfile, background } = useContext(AuthContext);
     const [posts, setPosts] = useState<Post[]>([]);
-
-    useEffect(() => {
-        const checkSelfProfile = async () => {
-            const token = await AsyncStorage.getItem("profile_id")
-            if (token === id) navigate('Meu Perfil')
-        }
-        checkSelfProfile()
-    }, [])
 
     useEffect(() => {
         const getPosts = async () => {
             try {
                 const token = await AsyncStorage.getItem("accessToken")
-                const response = await server.auth(token as string).get(`/feed/profile/${id}`)
+                const profile_id = await AsyncStorage.getItem("profile_id")
+                const response = await server.auth(token as string).get(`/feed/profile/${profile_id}`)
                 setPosts(response.data)
             } catch (error) {
                 console.log(error)
@@ -50,23 +33,14 @@ export default function ProfileScreen({ route }: { route: any }) {
     }, [])
 
     useEffect(() => {
-        const getProfile = async () => {
-            try {
-                const token = await AsyncStorage.getItem("accessToken")
-                const response = await server.auth(token).get(`/profiles/${id}`)
-                setProfile(response.data)
-            } catch (error) {
-                console.log(error)
-            }
-        }
         getProfile()
     }, [])
 
     function renderList({ item }: { item: Post }) {
         if (Object.prototype.hasOwnProperty.call(item, "followers")) {
             return (
-                <ProfileCard profile={profile} resume={false}>
-                    <ButtonsProfileFollow />
+                <ProfileCard profile={profile} background={background} resume={false}>
+                    <ButtonsProfileSelf />
                 </ProfileCard >
             )
         } else return <CardPost post={item} />

@@ -29,39 +29,24 @@ const ReceiveAlert = () => {
     })
 
     useEffect(() => {
-        // socket.on("connect_profile", (id) => {
-        //     console.log('connect_profile', id);
-        // });
-
-        // socket.on("disconnect", () => {
-        //     console.log(`disconnect socket`);
-        // });
-
         socket.on("post-new", (data) => {
             countPersistent.current["post-new"] += 1
             setPostNew(countPersistent.current["post-new"])
-            // console.log(`post socket- ${data}`);
-
         });
 
         socket.on("post-like", (data) => {
             countPersistent.current["post-like"] += 1
             setPostLike(countPersistent.current["post-like"])
-            // console.log(`post-like socket- ${data}`);
-
         });
 
         socket.on("comment-new", (data) => {
             countPersistent.current["comment-new"] += 1
             setComment(countPersistent.current["comment-new"])
-            // console.log(`comment-new- ${data}`);
-
         });
 
         socket.on("follow-new", (data) => {
             countPersistent.current["follow-new"] += 1
             setFollow(countPersistent.current["follow-new"])
-            // console.log(data);
         });
 
         socket.on("connect_error", (err) => {

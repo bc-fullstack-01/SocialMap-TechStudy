@@ -46,8 +46,6 @@ async function receiveMsgAndAlertSocket(socketsOn, io) {
             socketsOn.filter(([, socket]) => message.properties.headers.id.includes(socket.profile.toString()))
                 .map(([k, s]) => s.emit('follow-new', JSON.parse(message.content)))
         })
-
-
     } catch (err) {
         console.log('Erro no consumo da file rabbit', err)
     }

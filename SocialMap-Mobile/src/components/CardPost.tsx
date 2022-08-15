@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Card } from "@rneui/base";
+import { navigate } from '../../RootNavigation';
 
 import Spacer from "./Spacer";
 import { Post } from '../models/Post'
@@ -18,13 +19,13 @@ interface IProps {
 }
 
 export default function CardPost({ post }: IProps) {
-    const { likePost, unlikePost, errorMessage } = useContext(PostContext);
+    const { likePost, unlikePost } = useContext(PostContext);
 
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate('PostDetail', { id: post._id })}>
             <Card>
                 <View style={style.header}>
-                    <CustomAvatar name={post.profile.name} midia={post.profile.midia} />
+                    <CustomAvatar id={post.profile._id} name={post.profile.name} midia={post.profile.midia} />
                     <Text style={style.name}>{Utils.capitalizeFirstLetter(post.profile.name)}</Text>
                 </View>
 
@@ -36,7 +37,7 @@ export default function CardPost({ post }: IProps) {
 
                 {post.midia ? (
                     <>
-                        <Card.Image source={{ uri: post.midia }} style={style.image} />
+                        <Image  source={{ uri: post.midia }} style={style.image} />
                         <Spacer />
                     </>
                 ) : (<Spacer />)}
@@ -89,6 +90,8 @@ const style = StyleSheet.create({
     },
     image: {
         resizeMode: "contain",
+        width: '100%',
+        minHeight: 300,
         maxHeight: 600,
         marginTop: 15,
 

@@ -1,12 +1,13 @@
-<!-- <h1 align="center">
+<h1 align="center">
   <img alt="NextLevelWeek" title="#NextLevelWeek" src="./midias/logo6.png"/>
 </h1>
 
 
-- [x] API Backend
+- [x] API Backend (Faltam alguns ajustes)
 - [x] Frontend Web
-- [x] Frontend Mobile
+- [x] Frontend Mobile (Em desenvolvimento)
 
+## Versão WEB
 
 <p align="center">
   <kbd>
@@ -25,6 +26,21 @@
 <kbd>
   <img width="650" style="border-radius: 5px" height="400" src="./midias/web-exemple.gif" alt="Chat">
 </kbd>
+</p>
+
+## Versão Mobile
+<p align="center">
+  <kbd>
+    <img width="250" style="border-radius: 5px" height="480" src="./midias/app4.jpeg" alt="Intro">
+  </kbd>
+  <kbd>
+    <img width="250" style="border-radius: 5px" height="480" src="./midias/app2.jpeg" alt="Register adopt">
+  </kbd>
+  <kbd>
+    <img width="250" style="border-radius: 5px" height="480" src="./midias/app5.jpeg" alt="Register adopt">
+  </kbd>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+
 </p>
 
 
@@ -90,7 +106,20 @@ const CONSTANTS = {
 $ npm start
 ```
 
-## Inicie o projeto Mobile
+## Inicie o projeto Mobile (Em desenvolvimento)
 ```shell
 $ cd SocialMap-Mobile
-``` -->
+$ npm install
+```
+
+### Mudar o valor no arquivo constante.ts para o host da sua internet  
+```js
+const CONSTANTS = {
+    API_HOST: 'http://SUA_REDE:4000/v1',
+    SOCKET_HOST: 'http://SUA_REDE:4000/v1'
+}
+```
+### Rodar o projeto
+```shell
+$ npm start
+```

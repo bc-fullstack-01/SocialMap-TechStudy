@@ -80,10 +80,8 @@ const Provider = ({ children }: { children: ReactElement }) => {
             const token = await AsyncStorage.getItem("accessToken")
             const profile_id = await AsyncStorage.getItem("profile_id")
             await server.auth(token as string).post(`/posts/${postId}/like`)
-            console.log(postId, profile_id)
             dispatch({ type: "like_post", payload: { postId, liked: true, profile_id } })
         } catch (err) {
-            console.log(err)
             Utils.setMessagensContext(dispatch, "errorComponent", "Falha ao realizar o Like!");
         }
     }
@@ -95,7 +93,6 @@ const Provider = ({ children }: { children: ReactElement }) => {
             await server.auth(token as string).post(`/posts/${postId}/unlike`)
             dispatch({ type: "unlike_post", payload: { postId, liked: false, profile_id } })
         } catch (err) {
-            console.log(err)
             Utils.setMessagensContext(dispatch, "errorComponent", "Falha ao realizar o Like!");
         }
     }
@@ -107,9 +104,7 @@ const Provider = ({ children }: { children: ReactElement }) => {
             data.append('title', title)
             data.append('content', content)
             file ? data.append('file', file) : ''
-            console.log(file)
             const response = await server.auth(token as string).post(`/posts`, data)
-            console.log(response)
             Utils.setMessagensContext(dispatch, "successfulMessage", "Post criado com sucesso!");
         } catch (err) {
             Utils.setMessagensContext(dispatch, "errorComponent", "Falha ao criar o Post!");

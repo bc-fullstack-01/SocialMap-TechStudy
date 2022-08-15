@@ -1,138 +1,135 @@
-import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from "react-native";
-import { Avatar } from "react-native-elements";
-import { Context as PostContext } from "../context/PostContext"
-import { Context as AuthContext } from "../context/AuthContext"
-import { Button } from "@rneui/base";
-import SpacerComment from "../components/SpacerComment"
+import React, { useEffect, useState, useCallback } from 'react';
+import { Input, Button, Text, Divider } from '@rneui/base';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
-const UselessTextInput = (props) => {
-    return (
-        <TextInput
-            {...props}
-            editable
-            maxLength={160}
-        />
-    );
-}
-//43:07
+import CustomAvatar from "../components/CustomAvatar";
+import CardPost from '../components/CardPost';
+import Spacer from '../components/Spacer';
+import { Post } from '../models/Post';
+import server from '../api/server';
+import Utils from "../Utils"
 
-export default function PostScreen({ route }: IPros) {
-    const { post, like, unlike, createComment } = useContext(PostContext)
-    const { profile } = useContext(AuthContext)
-    const getInitials = (name: string) => name.split(" ").slice(0, 2).map(name => name[0])
+export default function PostScreen({ route }: { route: any }) {
+    const { id } = route.params;
+    const [comment, setComment] = useState('');
+    const [post, setPost] = useState<Post>();
 
-    const handleComment = (id: string, comment: string) => {
-        createComment(id, comment)
-        setComment("")
-    }
+    const [, updateState] = useState<any>();
+    const Update = useCallback(() => updateState({}), []);
 
-    const [comment, setComment] = useState("")
 
     useEffect(() => {
-
-    },)
+        const getPost = async () => {
+            try {
+                const token = await AsyncStorage.getItem('accessToken');
+                const profile_id = await AsyncStorage.getItem('profile_id');
+                const response = await server.auth(token).get(`/posts/${id}`)
+                const post = {
+                    ...response.data,
+                    liked: response.data.likes.includes(profile_id),
+                };
+                setPost(post);
+            } catch (err) {
+                console.log('getPost', err);
+            }
+        };
+        getPost();
+    }, []);
 
     const addComment = async () => {
-        
-    }
+        try {
+            const token = await AsyncStorage.getItem('accessToken');
+            const profile_id = await AsyncStorage.getItem('profile_id');
+            const name = await AsyncStorage.getItem('name');
+            const midia = await AsyncStorage.getItem('midia');
 
+            const response = await server.auth(token).post(`/posts/${id}/comment`, { description: comment });
+            const newComment = {
+                ...response.data,
+                profile: {
+                    _id: profile_id,
+                    name: name,
+                    midia: midia ? midia : null,
+                }
+            }
+            post?.comments.unshift(newComment);
+            setPost(post)
+            Update()
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     return (
-        <>
-            <View style={styles.content}>
-                <Avatar overlayContainerStyle={{ backgroundColor: 'red' }} rounded title={getInitials(post.profile.name)[0]}></Avatar>
-                <Text style={{ marginLeft: 10 }}>{post.title}</Text>
-            </View>
+        <ScrollView>
+            {post ? (
+                <View>
+                    <CardPost post={post} />
+                    <Spacer>
+                        <>
+                            <Divider />
+                            <Spacer />
+                            <Input
+                                label='Novo comentario:'
+                                value={comment}
+                                onChangeText={setComment}
+                                multiline={true}
+                                numberOfLines={3}
+                            />
+                            <Button buttonStyle={styles.button} title='comentar' onPress={() => {
+                                setComment('')
+                                addComment()
+                            }} />
+                            <Spacer />
+                            {post.comments.map((item) => (
+                                <View style={styles.container} key={item._id}>
+                                    <View style={styles.header}>
+                                        <CustomAvatar id={item.profile._id} name={item.profile.name} midia={item.profile.midia} />
+                                        <Text style={styles.name}>{Utils.capitalizeFirstLetter(item.profile.name)}</Text>
+                                    </View>
+                                    <Text style={styles.text}>{item.description}</Text>
+                                </View>
+                            ))
+                            }
 
-            <View>
-                {post.image ? (
-                    <Image source={{ uri: post.content }} style={{ width: 400, height: 400 }}></Image>
-                ) : (
-                    <Text style={{ marginLeft: 10, marginRight: 10 }}>{post.content}</Text>
-                )}
-            </View>
-            <View
-                style={{
-                    borderBottomColor: 'black',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    margin: 10
-                }}
-            />
-            <View style={styles.content}>
-                <Text style={{ fontWeight: "bold" }}>{post.comments.length} Comentários</Text>
-                <TouchableOpacity onPress={() => { post.likes.includes(profile) ? unlike(post._id) : like(post._id) }}>
-                    <Text style={{ fontWeight: "bold", marginLeft: 10 }}>{post.likes.length} Curtidas</Text>
-                </TouchableOpacity>
-            </View>
-            <View
-                style={{
-                    borderBottomColor: 'black',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    margin: 10
-                }}
-            />
-            <View>
-                <Text style={{ fontWeight: "bold", margin: 10 }}>Comentário</Text>
-                <UselessTextInput
-                    multiline
-                    numberOfLines={3}
-                    onChangeText={setComment}
-                    value={comment}
-                    style={{ paddingLeft: 10, paddingRight: 10 }}
-                />
-                <View
-                    style={{
-                        borderBottomColor: 'black',
-                        borderBottomWidth: StyleSheet.hairlineWidth,
-                        marginLeft: 10,
-                        marginRight: 10
-                    }}
-                />
-                <SpacerComment>
-                    <Button
-                        title="Publicar"
-                        onPress={() => handleComment(post._id, comment)}
-                    ></Button>
-                </SpacerComment>
-            </View>
-            <View
-                style={{
-                    borderBottomColor: 'black',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    margin: 10
-                }}
-            />
-            {post.comments.map((c) => (
-                <View key={c._id}>
-                    <View style={styles.content} >
-                        <Avatar overlayContainerStyle={{ backgroundColor: 'red' }} rounded title={getInitials(c.profile.name)[0]}></Avatar>
-                        <Text style={{ marginLeft: 10, marginRight: 10 }}>{c.content}</Text>
-
-                    </View>
-                    <View
-                        style={{
-                            borderBottomColor: 'black',
-                            borderBottomWidth: StyleSheet.hairlineWidth,
-                            margin: 10
-                        }}
-                    />
+                        </>
+                    </Spacer>
                 </View>
-            ))}
-
-        </>
-
-
+            ) : null}
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    content: {
-
-        flexDirection: 'row',
-
-        margin: 10,
+    list: {
+        height: "100%",
+    },
+    container: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 10,
+        marginBottom: 10,
+    },
+    header: {
+        flexDirection: "row",
         alignItems: "center",
-        justifyContent: 'flex-start'
+        marginBottom: 0,
+    },
+    name: {
+        marginLeft: 8,
+        fontWeight: "bold",
+        fontSize: 20,
+    },
+    text: {
+        fontSize: 14,
+        marginLeft: 10,
+        marginTop: 10,
+    },
+    button: {
+        alignSelf: 'flex-end',
+        width: '33%'
     }
 })
+
+

@@ -1,21 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as ImagerPicker from "expo-image-picker"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 import { File } from "../models/File"
+import Spacer from "./Spacer"
+import { Avatar } from "@rneui/base";
 
 interface IProps {
     onFileLoaded: (file: File) => void
 }
 
-export default function ImagePicker({ onFileLoaded }: IProps) {
-    const [image, setImage] = useState(null)
+export default function ImagePickerProfile({ onFileLoaded }: IProps) {
+    const [image, setImage] = useState()
+
+    useEffect(() => {
+        const getImage = async () => {
+            var midia = await AsyncStorage.getItem('midia')
+            setImage(midia)
+        }
+        getImage()
+    }, [])
 
     const pickImage = async () => {
         let result = await ImagerPicker.launchImageLibraryAsync({
             mediaTypes: ImagerPicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            aspect: [4, 3],
+            aspect: [3, 4],
             quality: 1
         })
 
@@ -31,9 +42,15 @@ export default function ImagePicker({ onFileLoaded }: IProps) {
     return (
         <>
             <TouchableOpacity onPress={pickImage}>
-                <View style={styles.imagePickerDiv}>
+                <View>
                     {image ? (
-                        <Image source={{ uri: image }} style={styles.image} resizeMethod="scale"/>
+                        <Avatar
+                            containerStyle={styles.avatar}
+                            size={130}
+                            source={{ uri: image }}
+                            rounded
+                            onPress={pickImage}
+                        />
                     ) : (
                         <Text onPress={pickImage}>Selecionar Imagem</Text>
                     )}
@@ -48,29 +65,8 @@ export default function ImagePicker({ onFileLoaded }: IProps) {
 
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    imagePickerDiv: {
-        minHeight: 85,
-        maxHeight: 420,
-        justifyContent: "center",
-        alignItems: "center",
-
-        paddingBottom: 15,
-        paddingTop: 15,
-
-        borderRadius: 10,
-        borderStyle: "dotted",
-        borderColor: 'black',
-        borderWidth: 2,
-    },
-    image: {
-        borderRadius: 10,
-        width: 320,
-        height: 240,
-
-        // objectFit: "fill",
+    avatar: {
+        borderColor: '#9ea3a8',
+        borderWidth: 1,
     }
 })

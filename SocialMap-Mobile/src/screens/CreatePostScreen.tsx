@@ -31,8 +31,8 @@ export default function CreatePostScreen() {
                         label="Manda a boa!"
                         value={content}
                         onChangeText={setcontent}
+                        multiline={true}
                         numberOfLines={3}
-                        autoCorrect={false}
                     />
                     <ImagePicker onFileLoaded={setFile} />
                     <Spacer />

@@ -31,7 +31,6 @@ function authenticateToken(req, res, next) {
 
 
 function endPointError(err, req, res, next) {
-    console.log(`Erro EndPoint : ${err}`)
     if (err.name && err.name === "ValidationError") {
         res.status(406).json(err)
     }

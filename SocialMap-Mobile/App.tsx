@@ -1,19 +1,17 @@
 import React, { useContext, useEffect } from 'react';
 import { StyleSheet, StatusBar } from 'react-native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { MaterialIcons } from '@expo/vector-icons'
 
 import HomeNavigationScreen from "./src/screens/HomeNavigationScreen";
-import LoginScreen from './src/screens/LoginScreen';
+import ProfileSelfScreen from './src/screens/ProfileSelfScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
-import PostScreen from './src/screens/PostScreen';
-import ProfileScreen from './src/screens/ProfileScreen';
 import ProfilesScreen from './src/screens/ProfilesScreen';
-import CreatePostScreen from './src/screens/CreatePostScreen';
+import LoginScreen from './src/screens/LoginScreen';
 
 import { Provider as AuthProvider, Context as AuthContext } from './src/context/AuthContext';
 import { Provider as PostProvider } from "./src/context/PostContext"
@@ -64,9 +62,9 @@ const App = () => {
                   switch (route.name) {
                     case "Home":
                       return (<MaterialIcons name="home" size={size} color={color} />)
-                    case "Profiles":
+                    case "Perfis":
                       return (<MaterialIcons name="groups" size={size} color={color} />)
-                    case "Profile":
+                    case "Meu Perfil":
                       return (<MaterialIcons name="account-circle" size={size} color={color} />)
                   }
                 },
@@ -74,8 +72,8 @@ const App = () => {
               })}
             >
               <Tab.Screen name='Home' component={HomeNavigationScreen}></Tab.Screen>
-              <Tab.Screen name='Profiles' component={ProfilesScreen}></Tab.Screen>
-              <Tab.Screen name='Profile' component={ProfileScreen}></Tab.Screen>
+              <Tab.Screen name='Perfis' component={ProfilesScreen}></Tab.Screen>
+              <Tab.Screen name='Meu Perfil' component={ProfileSelfScreen}></Tab.Screen>
             </Tab.Navigator>
           )
         }
@@ -87,21 +85,19 @@ const App = () => {
 
 export default () => {
   return (
-    <RootSiblingParent>
-      <AuthProvider>
-        <PostProvider>
-          <>
-            <StatusBar
-              animated={true}
-              backgroundColor="black"
-              barStyle='light-content'
-              showHideTransition={'fade'}
-            />
-            <App />
-          </>
-        </PostProvider>
-      </AuthProvider>
-    </RootSiblingParent>
+    <AuthProvider>
+      <PostProvider>
+        <>
+          <StatusBar
+            animated={true}
+            backgroundColor="black"
+            barStyle='light-content'
+            showHideTransition={'fade'}
+          />
+          <App />
+        </>
+      </PostProvider>
+    </AuthProvider>
   )
 }
 

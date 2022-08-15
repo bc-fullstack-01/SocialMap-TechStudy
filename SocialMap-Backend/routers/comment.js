@@ -15,7 +15,10 @@ router
     .post((req, res, next) => Promise.resolve()
         .then(() => new Comment({ ...req.body, post: req.params.postId, profile: req.user.profile._id }).save())
         .then(comment => Post.findByIdAndUpdate(comment.post, { $push: { comments: comment._id } })
-            .then((Post) => { req.publish("notifications", "comment-new", comment._id.toString(), { id: Post.profile._id.toString() }) }))
+            .then((Post) => { 
+                req.publish("notifications", "comment-new", comment._id.toString(), { id: Post.profile._id.toString() })
+                return comment
+             }))
         .then((post) => res.status(201).json(post))
         .catch(err => next(err)));
 
