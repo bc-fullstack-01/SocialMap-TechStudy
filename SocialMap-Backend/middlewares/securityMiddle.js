@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const jwt = require('jsonwebtoken')
+const logger = require("log4js").getLogger("aplication");
 
 const { Connection, User } = require('../models');
 
@@ -45,6 +46,7 @@ function endPointError(err, req, res, next) {
             error: { message: 'Duplicate key not allowed' }
         })
     } else {
+        logger.error(err);
         res.status(err.status || 500).json({
             url: req.originalUrl,
             error: { message: 'Not informed' }

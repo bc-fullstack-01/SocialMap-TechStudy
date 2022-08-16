@@ -1,26 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as ImagerPicker from "expo-image-picker"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 
 import { File } from "../models/File"
-import Spacer from "./Spacer"
-import { Avatar } from "@rneui/base";
+import CustomAvatar from "./CustomAvatar"
 
 interface IProps {
     onFileLoaded: (file: File) => void
+    midia?: string
+    name: string
 }
 
-export default function ImagePickerProfile({ onFileLoaded }: IProps) {
-    const [image, setImage] = useState()
-
-    useEffect(() => {
-        const getImage = async () => {
-            var midia = await AsyncStorage.getItem('midia')
-            setImage(midia)
-        }
-        getImage()
-    }, [])
+export default function ImagePickerProfile({ onFileLoaded, midia, name }: IProps) {
+    const [image, setImage] = useState(midia)
 
     const pickImage = async () => {
         let result = await ImagerPicker.launchImageLibraryAsync({
@@ -43,17 +35,13 @@ export default function ImagePickerProfile({ onFileLoaded }: IProps) {
         <>
             <TouchableOpacity onPress={pickImage}>
                 <View>
-                    {image ? (
-                        <Avatar
-                            containerStyle={styles.avatar}
-                            size={130}
-                            source={{ uri: image }}
-                            rounded
-                            onPress={pickImage}
-                        />
-                    ) : (
-                        <Text onPress={pickImage}>Selecionar Imagem</Text>
-                    )}
+                    <CustomAvatar
+                        name={name}
+                        midia={image}
+                        size={130}
+                        style={styles.avatar}
+                        onPress={pickImage}
+                    />
                 </View>
             </TouchableOpacity>
 

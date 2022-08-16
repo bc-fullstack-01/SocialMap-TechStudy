@@ -1,11 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet,  } from "react-native";
 
 import { Context as AuthContext } from "../context/AuthContext"
 import RegisterForm from "../components/RegisterForm";
-import ToastPer from '../components/Toast'
 
 
 interface Props {
@@ -14,7 +13,7 @@ interface Props {
 
 export default function RegisterScreen({ navigation }: Props) {
 
-    const { register, errorMessage, successfulMessage } = useContext(AuthContext)
+    const { register } = useContext(AuthContext)
 
     const link = () => {
         navigation.navigate("Login")
@@ -32,10 +31,7 @@ export default function RegisterScreen({ navigation }: Props) {
                 onSubmit={register}
                 link={link}
                 linkText="Já tem uma conta? Faça o login"
-            />
-            <ToastPer msg={successfulMessage as string} type={'success'} />
-            <ToastPer msg={errorMessage as string} type={'error'} />
-            
+            />            
         </LinearGradient>
 
     )

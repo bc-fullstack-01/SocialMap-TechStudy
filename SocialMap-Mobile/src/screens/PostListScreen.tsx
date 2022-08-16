@@ -5,10 +5,8 @@ import InfiniteScroll from 'react-native-infinite-scrolling'
 import { Context as PostContext } from "../context/PostContext";
 import { Context as AuthContext } from "../context/AuthContext";
 
-import { ButtonsProfileSelf } from '../components/ButtonsProfile'
 import ProfileCard from "../components/ProfileCard";
 import CardPost from "../components/CardPost";
-import ToastPer from '../components/Toast'
 
 import { Post } from '../models/Post'
 
@@ -33,17 +31,16 @@ export default function PostListScreen() {
     function renderList({ item }: { item: Post }) {
         if (Object.prototype.hasOwnProperty.call(item, "followers")) {
             return (
-                <ProfileCard profile={profile} background={background}>
-                    <ButtonsProfileSelf />
-                </ProfileCard >
+                <ProfileCard profile={profile} background={background} />
             )
-        } else return <CardPost post={item} />
+        } if (Object.prototype.hasOwnProperty.call(item, "title")) {
+            return <CardPost post={item} />
+        }
+
     }
 
     return (
         <>
-            <ToastPer msg={errorMessage as string} type={'error'} />
-
             {!errorMessageScreen ?
                 (<InfiniteScroll
                     data={[profile].concat(posts)}

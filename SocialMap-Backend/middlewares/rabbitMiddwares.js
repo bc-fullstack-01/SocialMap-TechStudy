@@ -1,5 +1,5 @@
 const RabbitmqServer = require("../libs/handlerRabbitmq");
-const { Post } = require("../models");
+const logger = require("log4js").getLogger("aplication");
 
 async function addPublishInReq(req, res, next) {
     try {
@@ -32,12 +32,6 @@ async function receiveMsgAndAlertSocket(socketsOn, io) {
         })
         rabit_server.consume('comment-new', (message) => {
             socketsOn = Object.entries(Object.fromEntries(socketsOn))
-            // console.log('--------------------------------------------')
-            // console.log(io.of("/v1").engine.clientsCount)        
-            // console.log(io.engine.clientsCount)        
-            for (c of socketsOn) {
-                console.log(c[0], c[1].profile.toString())
-            }
             socketsOn.filter(([, socket]) => message.properties.headers.id.includes(socket.profile.toString()))
                 .map(([k, s]) => { return s.emit('comment-new', JSON.parse(message.content)) })
         })
@@ -47,7 +41,7 @@ async function receiveMsgAndAlertSocket(socketsOn, io) {
                 .map(([k, s]) => s.emit('follow-new', JSON.parse(message.content)))
         })
     } catch (err) {
-        console.log('Erro no consumo da file rabbit', err)
+        logger.error('Error in middleware receiveMsgAndAlertSocket', err);
     }
 }
 
@@ -61,7 +55,7 @@ async function receiveMsgAndSaveData() {
             //implementação
         })
     } catch (err) {
-        console.log('Erro', err)
+        logger.error('Error in middleware receiveMsgAndSaveData', err);
     }
 }
 

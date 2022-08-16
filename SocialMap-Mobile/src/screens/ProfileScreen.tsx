@@ -6,7 +6,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ButtonsProfileFollow } from '../components/ButtonsProfile'
 import ProfileCard from "../components/ProfileCard";
 import CardPost from "../components/CardPost";
-import ToastPer from '../components/Toast'
 
 import { navigate } from '../../RootNavigation';
 import server from "../api/server";

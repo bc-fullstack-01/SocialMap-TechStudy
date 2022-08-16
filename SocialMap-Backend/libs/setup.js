@@ -1,4 +1,5 @@
 const RabbitmqServer = require("./handlerRabbitmq");
+const logger = require("log4js").getLogger("aplication");
 
 async function setQueue() {
     const server = new RabbitmqServer();
@@ -21,7 +22,7 @@ async function setQueue() {
     
     await server.connectQueueExchange('post', 'save-data', 'post')
 
-
+    logger.warn('Setup rabbitMQ');
 
 }
 

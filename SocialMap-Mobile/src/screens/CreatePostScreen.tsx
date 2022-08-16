@@ -6,7 +6,6 @@ import { Context as PostContext } from "../context/PostContext";
 import ImagePicker from "../components/ImagePicker"
 import Spacer from "../components/Spacer"
 import { File } from "../models/File"
-import { ToastAuto } from "../components/Toast"
 
 
 export default function CreatePostScreen() {

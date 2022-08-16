@@ -37,7 +37,7 @@ export default function CardPost({ post }: IProps) {
 
                 {post.midia ? (
                     <>
-                        <Image  source={{ uri: post.midia }} style={style.image} />
+                        <Image source={{ uri: post.midia }} style={style.image} />
                         <Spacer />
                     </>
                 ) : (<Spacer />)}

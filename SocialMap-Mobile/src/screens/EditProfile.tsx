@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { View, StyleSheet } from "react-native";
 import { Input, Button } from "@rneui/base";
+import { Context as AuthContext } from "../context/AuthContext"
 
 import ImagePickerProfile from "../components/ImagePickerProfile"
 import { navigate } from '../../RootNavigation';
@@ -11,7 +12,10 @@ import server from "../api/server";
 
 
 export default function EditProfile() {
+    const { createAlert } = useContext(AuthContext)
+
     const [file, setFile] = useState<File>()
+    const [midia, setMidia] = useState<string>()
     const [formData, setFormData] = useState({
         name: '',
         about: '',
@@ -28,8 +32,10 @@ export default function EditProfile() {
                     name: response.data.name,
                     about: response.data.about,
                 })
+                response.data.midia && setMidia(response.data.midia)
             } catch (error) {
                 console.log(error)
+                createAlert({ msg: 'Erro ao obter o perfil', type: 'error' })
             }
         }
         getProfile()
@@ -45,11 +51,11 @@ export default function EditProfile() {
         if (file) data.append("file", file);
         try {
             await server.upload(token).put('/profiles', data)
+            navigate('PostList')
         } catch (err) {
-            console.log(err)
+            createAlert({ msg: 'Algo deu errado!', type: 'error' })
         }
     }
-
 
 
     return (
@@ -57,7 +63,7 @@ export default function EditProfile() {
             <Spacer>
                 <>
                     <View style={styles.midia}>
-                        <ImagePickerProfile onFileLoaded={setFile} />
+                        <ImagePickerProfile onFileLoaded={setFile} name={formData.name} midia={midia} />
                     </View >
 
                     <View style={styles.retrai}>

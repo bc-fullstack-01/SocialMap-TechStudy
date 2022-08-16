@@ -6,7 +6,7 @@ SocialMap API
 <li>Autentificação com JWT e encriptografia de senha</li>
 <li>Helmet - para proteção</li>
 <li>Swagger - Criação da documentação</li>
-<li>Morgan - Criação de Logs para cada iniciação do server</li>
+<li>Morgan para logs http e log4js para logs da aplicação</li>
 <li>Websocket - Para alerta de notficações</li>
 <li>RabbitMQ - Exchange para Notificações</li>
 </ul>
@@ -30,7 +30,7 @@ SocialMap API
       retries: 5
 ```
 - População robusta do banco de dados, atravéz do seed
-
+- Logs com log4js para ajudar a encontrar possiveis erros
 - Post com midia e texto
 - Usando a lib ampqlib para rabbitMQ
 - Criando exchange e filas na inicialização do server

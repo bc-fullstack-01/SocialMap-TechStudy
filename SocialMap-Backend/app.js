@@ -1,21 +1,27 @@
 const express = require("express");
 const swaggerUi = require('swagger-ui-express');
+const rfs = require('rotating-file-stream')
 const createError = require("http-errors");
 const bodyParser = require("body-parser");
-const logger = require("morgan");
 const helmet = require("helmet");
+const morgan = require("morgan");
 const path = require('path')
 const cors = require("cors")
-const fs = require('fs')
- 
+
+
 // Files import
 const { addPublishInReq } = require('./middlewares/rabbitMiddwares');
 const Middles = require('./middlewares/securityMiddle');
 const routers = require("./routers");
 
 // Variables
-const morganLogPath = fs.createWriteStream(path.join(__dirname, `Logs/access_${new Date().valueOf()}.log`), { flags: 'a' })
-const bodyEncoded = bodyParser.urlencoded({ extended: true })
+// create a rotating write stream
+var accessLogStream = rfs.createStream('http.log', {
+    interval: '1d', 
+    path: path.join(__dirname, 'logs')
+})
+bodyEncoded = bodyParser.urlencoded({ extended: true })
+
 
 // instanciate express
 const app = express();
@@ -25,7 +31,7 @@ const app = express();
 app.use(cors())
 // app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
-app.use(logger(process.env.DEV || "dev", { stream: morganLogPath }));
+app.use(morgan(process.env.DEV || "dev", { stream: accessLogStream }))
 app.use(express.static(path.join(__dirname, "public")))
 app.use((req, res, next) => (/^multipart\//i.test(req.get('Content-Type'))) ? next() : bodyEncoded(req, res, next))
 app.use(bodyParser.json({ defer: true }));

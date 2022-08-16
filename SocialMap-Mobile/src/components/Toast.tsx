@@ -1,45 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Toast from 'react-native-root-toast';
+import { Context as AuthContext } from "../context/AuthContext"
 
-interface IProp {
-    msg: string
-    type: string
-}
 
-export default function ToastPer({ msg, type }: IProp) {
+export default function ToastAuto() {
+    const { alert } = useContext(AuthContext)
     const colors = { 'error': 'red', 'success': 'green' }
 
     return (
         <Toast
-            visible={msg ? true : false}
+            visible={alert.msg ? true : false}
             position={50}
             shadow={true}
             animation={true}
-            backgroundColor={colors[type]}
-        >{msg}
-        </Toast>
-    )
-}
-
-export function ToastAuto({ msg, type }: IProp) {
-    const [state, setState] = useState(false)
-    const colors = { 'error': 'red', 'success': 'green' }
-
-    useEffect(() => {
-        setState(true)
-        setTimeout(() => {
-            setState(false)
-        }, 2500)
-    }, [])
-
-    return (
-        <Toast
-            visible={state}
-            position={50}
-            shadow={true}
-            animation={true}
-            backgroundColor={colors[type]}
-        >{msg}
+            backgroundColor={colors[alert.type ? alert.type : 'error']}
+        >{alert.msg}
         </Toast>
     )
 }

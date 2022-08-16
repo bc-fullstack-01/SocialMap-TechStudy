@@ -23,15 +23,15 @@ function getFistsNames(names: string, qtd: number) {
     return names.split(" ").slice(0, qtd).map((names) => names[0]).join().replace(",", "");
 }
 
-const setMessagensContext = (dispatch: any, type: string, menssage: string, other: any = {}) => {
-    dispatch({ ...other, type: type, payload: menssage })
+const setMessagensContext = (dispatch: any, type: string, alert: any, other: any = {}) => {
+    dispatch({ ...other, type: type, payload: alert })
     setTimeout(() => {
-        dispatch({ type: type, payload: "" })
+        dispatch({ type: type, payload: { msg: '', alert: '' } })
     }, 2500)
 }
 
 const getScreen = () => {
-    const {height, width} = Dimensions.get('screen')
+    const { height, width } = Dimensions.get('screen')
 
 }
 

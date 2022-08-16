@@ -5,6 +5,7 @@ import CustomAvatar from "../components/CustomAvatar";
 import Cover from "../assets/backgroundPerfil";
 import { Profile } from '../models/Profile'
 import Utils from '../Utils'
+import Spacer from './Spacer'
 
 
 interface IProps {
@@ -12,7 +13,7 @@ interface IProps {
     background?: any,
     children?: JSX.Element,
     resume?: boolean,
-    
+
 }
 
 
@@ -20,10 +21,10 @@ export default function ProfileCard({ profile, children, background, resume = tr
 
     return (
         <View style={styles.container}>
-            <Image source={background ? background: Cover[Utils.randomNumber(0, Cover.length)]} style={styles.background} />
+            <Image source={background ? background : Cover[Utils.randomNumber(0, Cover.length)]} style={styles.background} />
             <CustomAvatar id={profile._id} name={profile.name} midia={profile.midia} size={80} style={styles.avatar} />
 
-            {children}
+            {children ? children : <Spacer />}
 
             <Text style={styles.name} >{Utils.capitalizeFirstLetter(profile.name)}</Text>
             {profile.about ? (resume
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
         margin: 0,
     },
     infosContainer: {
-        top: topSub +16,
+        top: topSub + 16,
         width: '90%',
         flexDirection: 'row',
         padding: 15,

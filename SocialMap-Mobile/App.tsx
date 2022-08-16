@@ -4,7 +4,6 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { RootSiblingParent } from 'react-native-root-siblings';
 import { MaterialIcons } from '@expo/vector-icons'
 
 import HomeNavigationScreen from "./src/screens/HomeNavigationScreen";
@@ -16,6 +15,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import { Provider as AuthProvider, Context as AuthContext } from './src/context/AuthContext';
 import { Provider as PostProvider } from "./src/context/PostContext"
 import { navigationRef } from './RootNavigation';
+import ToastAuto from './src/components/Toast'
 
 const warn = console.warn;
 function logWarning(...warnings) {
@@ -94,21 +94,13 @@ export default () => {
             barStyle='light-content'
             showHideTransition={'fade'}
           />
+          <ToastAuto />
           <App />
         </>
       </PostProvider>
     </AuthProvider>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 const NavigationTheme = {
   ...DefaultTheme,

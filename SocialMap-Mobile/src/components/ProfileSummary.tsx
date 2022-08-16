@@ -79,11 +79,6 @@ const styles = StyleSheet.create({
 
         justifyContent: 'space-around',
         alignContent: 'center',
-
-        borderStyle: "solid",
-        borderColor: '#9ea3a8',
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
     },
     infosDiv: {
         alignItems: 'center',
