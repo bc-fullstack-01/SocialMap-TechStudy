@@ -18,7 +18,8 @@ export default function ProfileSummary({ item }: { item: Profile }) {
                     <CustomAvatar id={item._id} name={item.name} midia={item.midia} size={50} />
                     <Text style={styles.name}>{Utils.capitalizeFirstLetter(Utils.splitAbout(item.name, 2))}</Text>
                 </View>
-                <Button buttonStyle={styles.button} title='Espiar' onPress={() => navigate('Profile', { id: item._id })} />
+                <Button buttonStyle={styles.button} title='Espiar' onPress={
+                    () => navigate('Profile', { id: item._id, followers: item.followers })} />
             </View>
 
             {item.about && <Text style={styles.text}>{Utils.splitAbout(item.about, 30)}</Text>}

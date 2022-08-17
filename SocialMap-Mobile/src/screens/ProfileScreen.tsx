@@ -24,7 +24,7 @@ const profileClean = {
 
 
 export default function ProfileScreen({ route }: { route: any }) {
-    const { id } = route.params;
+    const { id, followers } = route.params;
     const [profile, setProfile] = useState<Profile>(profileClean);
     const [posts, setPosts] = useState<Post[]>([]);
 
@@ -66,7 +66,7 @@ export default function ProfileScreen({ route }: { route: any }) {
         if (Object.prototype.hasOwnProperty.call(item, "followers")) {
             return (
                 <ProfileCard profile={profile} resume={false}>
-                    <ButtonsProfileFollow />
+                    <ButtonsProfileFollow id={id} followers={followers} />
                 </ProfileCard >
             )
         } else return <CardPost post={item} />

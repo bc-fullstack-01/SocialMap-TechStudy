@@ -5,7 +5,7 @@ import { Avatar } from "@rneui/base";
 import { navigate } from '../../RootNavigation';
 import Utils from '../Utils'
 
-interface Props {
+interface IProps {
     name: string
     id?: string
     midia?: string
@@ -14,7 +14,7 @@ interface Props {
     onPress?: any | boolean
 }
 
-export default function CustomAvatar({ id, name, midia, style = {}, size = 'small', onPress = false }: Props) {
+export default function CustomAvatar({ id, name, midia, style = {}, size = 'small', onPress = false }: IProps) {
 
     function goToProfile() {
         navigate('Profile', { id: id })

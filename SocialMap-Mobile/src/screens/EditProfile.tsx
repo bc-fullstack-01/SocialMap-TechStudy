@@ -34,7 +34,6 @@ export default function EditProfile() {
                 })
                 response.data.midia && setMidia(response.data.midia)
             } catch (error) {
-                console.log(error)
                 createAlert({ msg: 'Erro ao obter o perfil', type: 'error' })
             }
         }
@@ -51,6 +50,7 @@ export default function EditProfile() {
         if (file) data.append("file", file);
         try {
             await server.upload(token).put('/profiles', data)
+            createAlert({ msg: 'Perfil editado com sucesso!', type: 'success' })
             navigate('PostList')
         } catch (err) {
             createAlert({ msg: 'Algo deu errado!', type: 'error' })

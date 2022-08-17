@@ -3,7 +3,7 @@
 </h1>
 
 
-- [x] API Backend (Faltam alguns ajustes)
+- [x] API Backend
 - [x] Frontend Web
 - [x] Frontend Mobile (Em desenvolvimento)
 

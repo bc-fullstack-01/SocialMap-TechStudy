@@ -41,7 +41,7 @@ interface IAuthContext {
     loginStorage?: () => void
     logout?: () => void
     getProfile?: () => void
-    createAlert?: ({ msg, type }: { msg: string, type: string }) => void
+    createAlert?: ({ msg, type }: { msg: string, type: "error" | "success" }) => void
 }
 
 const profileClean = {
@@ -94,7 +94,7 @@ const Provider = ({ children }: { children: ReactElement }) => {
             AsyncStorage.setItem("user", decoded.user)
             AsyncStorage.setItem("profile_id", decoded.profile_id)
             AsyncStorage.setItem("name", decoded.name)
-            
+
             dispatch({ type: "login", payload: { token: accessToken, profile: decoded.profile_id, user: decoded.user } })
         } catch (err: any) {
             err.response.status === 401 ?

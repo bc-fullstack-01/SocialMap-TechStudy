@@ -12,7 +12,7 @@ interface IProps {
 }
 
 export default function ImagePickerProfile({ onFileLoaded, midia, name }: IProps) {
-    const [image, setImage] = useState(midia)
+    const [image, setImage] = useState()
 
     const pickImage = async () => {
         let result = await ImagerPicker.launchImageLibraryAsync({
@@ -37,7 +37,7 @@ export default function ImagePickerProfile({ onFileLoaded, midia, name }: IProps
                 <View>
                     <CustomAvatar
                         name={name}
-                        midia={image}
+                        midia={image ? image : midia}
                         size={130}
                         style={styles.avatar}
                         onPress={pickImage}

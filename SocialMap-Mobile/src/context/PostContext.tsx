@@ -70,7 +70,6 @@ const Provider = ({ children }: { children: ReactElement }) => {
             })
             dispatch({ type: "show_posts", payload: posts })
         } catch (error) {
-            console.log(error)
             Utils.setMessagensContext(dispatch, "errorScreen", "Houve um erro ao carregar o feed!");
         }
     }

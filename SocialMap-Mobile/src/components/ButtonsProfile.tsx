@@ -1,8 +1,10 @@
-import React, { useContext, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Context as AuthContext } from "../context/AuthContext"
+import React, { useContext, useState, useCallback } from "react";
+import { View, StyleSheet } from "react-native";
 import { Button } from "@rneui/base";
+
+import { Context as AuthContext } from "../context/AuthContext"
 import { navigate } from '../../RootNavigation';
+import server from "../api/server";
 
 
 export const ButtonsProfileSelf = () => {
@@ -29,17 +31,46 @@ export const ButtonsProfileSelf = () => {
 }
 
 
-export const ButtonsProfileFollow = ({ profileId }: { profileId: string }) => {
-    const [following, setFollowing] = useState<string[]>();
+export const ButtonsProfileFollow = ({ id, followers }: { id: string, followers: string[] }) => {
+    const { createAlert, profile_id, token } = useContext(AuthContext)
+    const [following, setFollowing] = useState<string[]>(followers);
 
+    
+    const handleFollow = async () => {
+        try {
+            await server.auth(token).post(`/profiles/${id}/follow`)
+            setFollowing([profile_id])
+        } catch {
+            createAlert({ msg: 'Falha ao seguir esse perfil. Porfavor tente mais tarde!', type: 'error' })
+        }
+    }
+
+    const handleUnfollow = async () => {
+        try {
+            await server.auth(token).post(`/profiles/${id}/unfollow`)
+            setFollowing([])
+        } catch (erro){
+            console.log(erro, id)
+            createAlert({ msg: 'Falha ao desseguir esse perfil. Porfavor tente mais tarde!', type: 'error' })
+        }
+    }
     return (
         <View style={styles.container}>
-            <Button
-                buttonStyle={styles.buttom}
-                radius={12}
-                title="Seguir"
-                onPress={() => { }}
-            ></Button>
+            {following.includes(profile_id) ?
+                (<Button
+                    color={'red'}
+                    buttonStyle={styles.buttom}
+                    radius={12}
+                    title="Desseguir"
+                    onPress={handleUnfollow}
+                />) :
+                (<Button
+                    buttonStyle={styles.buttom}
+                    radius={12}
+                    title="Seguir"
+                    onPress={handleFollow}
+                />)
+            }
 
         </View>
     )
