@@ -24,7 +24,7 @@ const profileClean = {
 
 
 export default function ProfileScreen({ route }: { route: any }) {
-    const { id, followers } = route.params;
+    const { id } = route.params;
     const [profile, setProfile] = useState<Profile>(profileClean);
     const [posts, setPosts] = useState<Post[]>([]);
 
@@ -34,7 +34,7 @@ export default function ProfileScreen({ route }: { route: any }) {
             if (token === id) navigate('Meu Perfil')
         }
         checkSelfProfile()
-    }, [])
+    }, [id])
 
     useEffect(() => {
         const getPosts = async () => {
@@ -47,7 +47,7 @@ export default function ProfileScreen({ route }: { route: any }) {
             }
         }
         getPosts()
-    }, [])
+    }, [id])
 
     useEffect(() => {
         const getProfile = async () => {
@@ -60,13 +60,13 @@ export default function ProfileScreen({ route }: { route: any }) {
             }
         }
         getProfile()
-    }, [])
+    }, [id])
 
     function renderList({ item }: { item: Post }) {
         if (Object.prototype.hasOwnProperty.call(item, "followers")) {
             return (
                 <ProfileCard profile={profile} resume={false}>
-                    <ButtonsProfileFollow id={id} followers={followers} />
+                    <ButtonsProfileFollow id={profile._id} followers={profile.followers} />
                 </ProfileCard >
             )
         } else return <CardPost post={item} />

@@ -19,7 +19,7 @@ export default function ProfileSummary({ item }: { item: Profile }) {
                     <Text style={styles.name}>{Utils.capitalizeFirstLetter(Utils.splitAbout(item.name, 2))}</Text>
                 </View>
                 <Button buttonStyle={styles.button} title='Espiar' onPress={
-                    () => navigate('Profile', { id: item._id, followers: item.followers })} />
+                    () => navigate('Profile', { id: item._id })} />
             </View>
 
             {item.about && <Text style={styles.text}>{Utils.splitAbout(item.about, 30)}</Text>}
