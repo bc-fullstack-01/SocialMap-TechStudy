@@ -5,7 +5,7 @@
 
 - [x] API Backend
 - [x] Frontend Web
-- [x] Frontend Mobile (Em desenvolvimento)
+- [x] Frontend Mobile
 
 ## Versão WEB (100% responsiva)
 
