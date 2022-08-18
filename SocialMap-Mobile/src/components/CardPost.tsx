@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Card } from "@rneui/base";
@@ -8,8 +8,10 @@ import Spacer from "./Spacer";
 import { Post } from '../models/Post'
 
 import FaviriteIconButton from "../components/FavoriteIconButton";
-import { Context as PostContext } from "../context/PostContext";
+import { Context as AuthContext } from "../context/AuthContext";
 import CustomAvatar from "../components/CustomAvatar";
+
+import server from "../api/server";
 import Utils from '../Utils'
 
 
@@ -19,7 +21,31 @@ interface IProps {
 }
 
 export default function CardPost({ post }: IProps) {
-    const { likePost, unlikePost } = useContext(PostContext);
+    const { token, createAlert } = useContext(AuthContext);
+    const [liked, setLiked] = useState(post.liked)
+    const [countLike, setCountLike] = useState(post.likes.length)
+
+
+
+    const likePost = async (postId: String) => {
+        try {
+            await server.auth(token as string).post(`/posts/${postId}/like`)
+            setLiked(true)
+            setCountLike(countLike + 1)
+        } catch (err) {
+            createAlert({ msg: "Houve um erro ao carregar o feed!", type: "error" });
+        }
+    }
+
+    const unlikePost = async (postId: String) => {
+        try {
+            await server.auth(token).post(`/posts/${postId}/unlike`)
+            setLiked(false)
+            setCountLike(countLike - 1)
+        } catch (err) {
+            createAlert({ msg: "Houve um erro ao carregar o feed!", type: "error" });
+        }
+    }
 
     return (
         <TouchableOpacity onPress={() => navigate('PostDetail', { id: post._id })}>
@@ -46,13 +72,13 @@ export default function CardPost({ post }: IProps) {
 
                 <View style={style.ActionContainer}>
                     <FaviriteIconButton
-                        liked={post.liked as boolean}
+                        liked={liked}
                         handleLike={() => {
-                            post.liked
+                            liked
                                 ? unlikePost && unlikePost(post._id)
                                 : likePost && likePost(post._id)
                         }} />
-                    <Text style={style.ActionItemStyle}>{post.likes.length}</Text>
+                    <Text style={style.ActionItemStyle}>{countLike}</Text>
 
                     <MaterialIcons
                         name="chat-bubble-outline"

@@ -13,7 +13,6 @@ import ProfilesScreen from './src/screens/ProfilesScreen';
 import LoginScreen from './src/screens/LoginScreen';
 
 import { Provider as AuthProvider, Context as AuthContext } from './src/context/AuthContext';
-import { Provider as PostProvider } from "./src/context/PostContext"
 import { navigationRef } from './RootNavigation';
 import ToastAuto from './src/components/Toast'
 
@@ -86,18 +85,16 @@ const App = () => {
 export default () => {
   return (
     <AuthProvider>
-      <PostProvider>
-        <>
-          <StatusBar
-            animated={true}
-            backgroundColor="black"
-            barStyle='light-content'
-            showHideTransition={'fade'}
-          />
-          <ToastAuto />
-          <App />
-        </>
-      </PostProvider>
+      <>
+        <StatusBar
+          animated={true}
+          backgroundColor="black"
+          barStyle='light-content'
+          showHideTransition={'fade'}
+        />
+        <ToastAuto />
+        <App />
+      </>
     </AuthProvider>
   )
 }

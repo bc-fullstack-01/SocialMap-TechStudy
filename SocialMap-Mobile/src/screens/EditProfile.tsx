@@ -2,8 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { View, StyleSheet } from "react-native";
 import { Input, Button } from "@rneui/base";
-import { Context as AuthContext } from "../context/AuthContext"
 
+import { Context as AuthContext } from "../context/AuthContext"
 import ImagePickerProfile from "../components/ImagePickerProfile"
 import { navigate } from '../../RootNavigation';
 import Spacer from "../components/Spacer"
@@ -12,7 +12,7 @@ import server from "../api/server";
 
 
 export default function EditProfile() {
-    const { createAlert } = useContext(AuthContext)
+    const { createAlert, token, profile_id } = useContext(AuthContext)
 
     const [file, setFile] = useState<File>()
     const [midia, setMidia] = useState<string>()
@@ -25,9 +25,7 @@ export default function EditProfile() {
     useEffect(() => {
         const getProfile = async () => {
             try {
-                const token = await AsyncStorage.getItem("accessToken")
-                const id = await AsyncStorage.getItem("profile_id")
-                const response = await server.auth(token).get(`/profiles/${id}`)
+                const response = await server.auth(token).get(`/profiles/${profile_id}`)
                 setFormData({
                     name: response.data.name,
                     about: response.data.about,
@@ -53,7 +51,7 @@ export default function EditProfile() {
             createAlert({ msg: 'Perfil editado com sucesso!', type: 'success' })
             navigate('PostList')
         } catch (err) {
-            createAlert({ msg: 'Algo deu errado!', type: 'error' })
+            createAlert({ msg: 'Algo deu errado. Porfavor tente mais tarde!', type: 'error' })
         }
     }
 

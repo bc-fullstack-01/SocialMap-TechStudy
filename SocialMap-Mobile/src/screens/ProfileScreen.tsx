@@ -41,7 +41,7 @@ export default function ProfileScreen({ route }: { route: any }) {
             try {
                 const token = await AsyncStorage.getItem("accessToken")
                 const response = await server.auth(token as string).get(`/feed/profile/${id}`)
-                setPosts(response.data)
+                setPosts(response.data.slice(0).reverse())
             } catch (error) {
                 console.log(error)
             }

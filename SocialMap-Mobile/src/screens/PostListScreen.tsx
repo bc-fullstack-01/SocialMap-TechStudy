@@ -1,31 +1,45 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import InfiniteScroll from 'react-native-infinite-scrolling'
 
-import { Context as PostContext } from "../context/PostContext";
 import { Context as AuthContext } from "../context/AuthContext";
 
 import ProfileCard from "../components/ProfileCard";
 import CardPost from "../components/CardPost";
+import server from "../api/server";
 
 import { Post } from '../models/Post'
 
 
 export default function PostListScreen() {
-    const { profile, getProfile, background } = useContext(AuthContext);
-    const { posts, errorMessage, errorMessageScreen, getPosts } = useContext(PostContext);
-    const [actualPage, setActualPage] = useState<number>(0)
-
-    useEffect(() => {
-        getPosts ? getPosts(actualPage) : ''
-    }, [actualPage])
+    const { token, profile_id, profile, getProfile, createAlert, background } = useContext(AuthContext);
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [page, setPage] = useState<number>(0)
+    const [hasMore, setHasMore] = useState<boolean>(false)
 
     useEffect(() => {
         getProfile()
     }, [])
 
+    useEffect(() => {
+        const getPosts = async () => {
+            try {
+                const response = await server.auth(token).get(`/feed?page=${page}`)
+                const response_posts = response.data.map((post: Post) => {
+                    return { ...post, liked: post.likes.includes(profile_id) }
+                })
+                setHasMore(response.data.length > 0);
+                setPosts(posts.concat(response_posts))
+            } catch (error) {
+                createAlert({ msg: "Houve um erro ao carregar o feed!", type: "error" });
+            }
+        }
+        getPosts()
+    }, [page])
+
+
     const loadMore = () => {
-        setActualPage((page) => page + 1)
+        if (hasMore) setPage(page + 1)
     }
 
     function renderList({ item }: { item: Post }) {
@@ -40,19 +54,11 @@ export default function PostListScreen() {
     }
 
     return (
-        <>
-            {!errorMessageScreen ?
-                (<InfiniteScroll
-                    data={[profile].concat(posts)}
-                    renderData={renderList}
-                    loadMore={loadMore}
-                />)
-                :
-                (<View style={style.errorContainerStyle}>
-                    <Text style={style.errorMessageStyle}>{errorMessageScreen}</Text>
-                </View>)
-            }
-        </>
+        <InfiniteScroll
+            data={[profile].concat(posts)}
+            renderData={renderList}
+            loadMore={loadMore}
+        />
     )
 }
 

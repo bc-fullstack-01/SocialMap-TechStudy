@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import InfiniteScroll from 'react-native-infinite-scrolling'
 import {  StyleSheet } from "react-native";
 
@@ -14,25 +13,19 @@ import { Post } from '../models/Post'
 
 
 export default function ProfileSelfScreen() {
-    const { profile, getProfile, background } = useContext(AuthContext);
+    const { token,profile_id,  profile, getProfile, background } = useContext(AuthContext);
     const [posts, setPosts] = useState<Post[]>([]);
 
     useEffect(() => {
         const getPosts = async () => {
             try {
-                const token = await AsyncStorage.getItem("accessToken")
-                const profile_id = await AsyncStorage.getItem("profile_id")
-                const response = await server.auth(token as string).get(`/feed/profile/${profile_id}`)
-                setPosts(response.data)
+                const response = await server.auth(token).get(`/feed/profile/${profile_id}`)
+                setPosts(response.data.slice(0).reverse())
             } catch (error) {
                 console.log(error)
             }
         }
         getPosts()
-    }, [])
-
-    useEffect(() => {
-        getProfile()
     }, [])
 
     function renderList({ item }: { item: Post }) {
@@ -50,7 +43,6 @@ export default function ProfileSelfScreen() {
             <InfiniteScroll
                 data={[profile].concat(posts)}
                 renderData={renderList}
-                loadMore={() => { }}
             />
         </>
     )
