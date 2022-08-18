@@ -50,7 +50,7 @@ export default function EditProfile() {
             await server.upload(token).put('/profiles', data)
             createAlert({ msg: 'Perfil editado com sucesso!', type: 'success' })
             getProfile()
-            navigate('PostList')
+            navigate('Meu Perfil')
         } catch (err) {
             createAlert({ msg: 'Algo deu errado. Por favor tente mais tarde!', type: 'error' })
         }

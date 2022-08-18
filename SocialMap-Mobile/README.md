@@ -6,16 +6,14 @@
 ## Versão Mobile
 <p align="center">
   <kbd>
-    <img width="250" style="border-radius: 5px" height="480" src="./midias/app4.jpeg" alt="Intro">
+    <img width="250" style="border-radius: 5px" height="480" src="../midias/app4.jpeg" alt="Intro">
   </kbd>
   <kbd>
-    <img width="250" style="border-radius: 5px" height="480" src="./midias/app2.jpeg" alt="Register adopt">
+    <img width="250" style="border-radius: 5px" height="480" src="../midias/app2.jpeg" alt="Register adopt">
   </kbd>
   <kbd>
-    <img width="250" style="border-radius: 5px" height="480" src="./midias/app5.jpeg" alt="Register adopt">
+    <img width="250" style="border-radius: 5px" height="480" src="../midias/app7.jpeg" alt="Register adopt">
   </kbd>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-
 </p>
 
 ## Inicie o projeto Mobile (Em desenvolvimento)

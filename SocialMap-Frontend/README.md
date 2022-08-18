@@ -7,13 +7,13 @@
 
 <p align="center">
   <kbd>
-    <img width="250" style="border-radius: 5px" height="450" src="../midias/mobile_exemple.gif" alt="Intro">
+    <img width="250" style="border-radius: 5px" height="430" src="../midias/mobile_exemple.gif" alt="Intro">
   </kbd>
   <kbd>
-    <img width="250" style="border-radius: 5px" height="450" src="../midias/profile_sysmap.png" alt="Register adopt">
+    <img width="270" style="border-radius: 5px" height="430" src="../midias/profile_sysmap.png" alt="Register adopt">
   </kbd>
   <kbd>
-    <img width="250" style="border-radius: 5px" height="450" src="../midias/mobile_exemple2.gif" alt="Register adopt">
+    <img width="250" style="border-radius: 5px" height="430" src="../midias/mobile_exemple2.gif" alt="Register adopt">
   </kbd>
     &nbsp;&nbsp;&nbsp;&nbsp;
 
