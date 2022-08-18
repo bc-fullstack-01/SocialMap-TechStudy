@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { StyleSheet } from "react-native";
 import InfiniteScroll from 'react-native-infinite-scrolling'
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import { Context as AuthContext } from "../context/AuthContext";
 
 import { ButtonsProfileFollow } from '../components/ButtonsProfile'
 import ProfileCard from "../components/ProfileCard";
 import CardPost from "../components/CardPost";
 
 import { navigate } from '../../RootNavigation';
+import { Profile } from '../models/Profile'
+import { Post } from '../models/Post'
 import server from "../api/server";
 
-import { Post } from '../models/Post'
-import { Profile } from '../models/Profile'
 
 const profileClean = {
     _id: '',
@@ -24,13 +24,13 @@ const profileClean = {
 
 
 export default function ProfileScreen({ route }: { route: any }) {
+    const { token, createAlert } = useContext(AuthContext);
     const { id } = route.params;
-    const [profile, setProfile] = useState<Profile>(profileClean);
+    const [profileUser, setProfileUser] = useState<Profile>(profileClean);
     const [posts, setPosts] = useState<Post[]>([]);
 
     useEffect(() => {
         const checkSelfProfile = async () => {
-            const token = await AsyncStorage.getItem("profile_id")
             if (token === id) navigate('Meu Perfil')
         }
         checkSelfProfile()
@@ -39,11 +39,10 @@ export default function ProfileScreen({ route }: { route: any }) {
     useEffect(() => {
         const getPosts = async () => {
             try {
-                const token = await AsyncStorage.getItem("accessToken")
                 const response = await server.auth(token as string).get(`/feed/profile/${id}`)
                 setPosts(response.data.slice(0).reverse())
             } catch (error) {
-                console.log(error)
+                createAlert({ msg: "Houve um erro ao carregar os posts!", type: "error" });
             }
         }
         getPosts()
@@ -52,11 +51,10 @@ export default function ProfileScreen({ route }: { route: any }) {
     useEffect(() => {
         const getProfile = async () => {
             try {
-                const token = await AsyncStorage.getItem("accessToken")
                 const response = await server.auth(token).get(`/profiles/${id}`)
-                setProfile(response.data)
+                setProfileUser(response.data)
             } catch (error) {
-                console.log(error)
+                createAlert({ msg: "Houve um erro ao carregar o perfil. Por favor, tente mais tarde!", type: "error" });
             }
         }
         getProfile()
@@ -65,8 +63,8 @@ export default function ProfileScreen({ route }: { route: any }) {
     function renderList({ item }: { item: Post }) {
         if (Object.prototype.hasOwnProperty.call(item, "followers")) {
             return (
-                <ProfileCard profile={profile} resume={false}>
-                    <ButtonsProfileFollow id={profile._id} followers={profile.followers} />
+                <ProfileCard profile={profileUser} resume={false}>
+                    <ButtonsProfileFollow id={profileUser._id} followers={profileUser.followers} />
                 </ProfileCard >
             )
         } else return <CardPost post={item} />
@@ -75,7 +73,7 @@ export default function ProfileScreen({ route }: { route: any }) {
     return (
         <>
             <InfiniteScroll
-                data={[profile].concat(posts)}
+                data={[profileUser].concat(posts)}
                 renderData={renderList}
                 loadMore={() => { }}
             />

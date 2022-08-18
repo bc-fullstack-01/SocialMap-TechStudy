@@ -21,7 +21,7 @@ export default function ProfileCard({ profile, children, background, resume = tr
 
     return (
         <View style={styles.container}>
-            <Image source={background ? background : Cover[Utils.randomNumber(0, Cover.length)]} style={styles.background} />
+            <Image source={background ? background : Utils.getBackground()} style={styles.background} />
             <CustomAvatar id={profile._id} name={profile.name} midia={profile.midia} size={80} style={styles.avatar} />
 
             {children ? children : <Spacer />}

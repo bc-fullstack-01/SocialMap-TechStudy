@@ -36,6 +36,7 @@ interface IAuthContext {
     alert: any
     isLoading: boolean
     background: any,
+    dispatch?: () => void,
     login?: () => void
     register?: () => void
     loginStorage?: () => void
@@ -95,11 +96,12 @@ const Provider = ({ children }: { children: ReactElement }) => {
             AsyncStorage.setItem("profile_id", decoded.profile_id)
             AsyncStorage.setItem("name", decoded.name)
 
-            dispatch({ type: "login", payload: { token: accessToken, profile: decoded.profile_id, user: decoded.user } })
+            dispatch({ type: "login", payload: { token: accessToken, profile_id: decoded.profile_id, user: decoded.user, name: decoded.name } })
+
         } catch (err: any) {
             err.response.status === 401 ?
-                Utils.setMessagensContext(dispatch, "alert", { msg: "Usuario ou Senha incorretos!8", type: 'error' }) :
-                Utils.setMessagensContext(dispatch, "alert", { msg: "Houve algum erro inesperado!8", type: 'error' })
+                createAlert({ msg: "Usuario ou Senha incorretos!", type: 'error' }) :
+                createAlert({ msg: "Houve algum erro inesperado!", type: 'error' })
         }
     }
 
@@ -113,7 +115,7 @@ const Provider = ({ children }: { children: ReactElement }) => {
                 type: "login", payload: { token, profile_id, user, name }
             })
         } catch (err) {
-            Utils.setMessagensContext(dispatch, "alert", { msg: "Por favor faço o login novamente!", type: 'error' }, { isLoading: true })
+            Utils.setMessagensContext(dispatch, "alert", { msg: "Por favor faça o login novamente!", type: 'error' }, { isLoading: true })
         }
     }
 
@@ -121,13 +123,13 @@ const Provider = ({ children }: { children: ReactElement }) => {
         if (password === passwordConfirm) {
             try {
                 await server.noAuth.post("/unsecurity/register", { name, user, password })
-                Utils.setMessagensContext(dispatch, "alert", { msg: "Usuario criado com sucesso tentando fazer o login", type: 'success' })
+                createAlert({ msg: "Usuario criado com sucesso tentando fazer o login", type: 'success' })
                 login({ user, password })
             } catch (err) {
-                Utils.setMessagensContext(dispatch, "alert", { msg: "Erro na criação do usuario!", type: 'error' })
+                createAlert({ msg: "Erro na criação do usuario!", type: 'error' })
             }
         } else {
-            Utils.setMessagensContext(dispatch, 'alert', { msg: 'Senhas não correspondem!', type: 'error' })
+            createAlert({ msg: 'Senhas não correspondem!', type: 'error' })
         }
     }
 
@@ -146,7 +148,7 @@ const Provider = ({ children }: { children: ReactElement }) => {
             const response = await server.auth(token).get(`/profiles/${profile_id}`)
             dispatch({ type: "setProfile", payload: response.data })
         } catch (error) {
-            Utils.setMessagensContext(dispatch, "alert", { msg: "Erro na busca do perfil!", type: 'error' })
+            createAlert({ msg: "Erro na busca do perfil!", type: 'error' })
         }
     }
 
@@ -155,7 +157,7 @@ const Provider = ({ children }: { children: ReactElement }) => {
     }
 
     return (
-        <Context.Provider value={{ ...state, login, register, loginStorage, logout, getProfile, createAlert }}>
+        <Context.Provider value={{ ...state, dispatch, login, register, loginStorage, logout, getProfile, createAlert }}>
             {children}
         </Context.Provider>
     )

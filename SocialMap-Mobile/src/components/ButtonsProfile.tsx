@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { Button } from "@rneui/base";
 
@@ -33,7 +33,11 @@ export const ButtonsProfileSelf = () => {
 
 export const ButtonsProfileFollow = ({ id, followers }: { id: string, followers: string[] }) => {
     const { createAlert, profile_id, token } = useContext(AuthContext)
-    const [following, setFollowing] = useState<string[]>(followers);
+    const [following, setFollowing] = useState<string[]>([]);
+
+    useEffect(() => {
+        setFollowing(followers)
+    }, [followers])
 
     
     const handleFollow = async () => {
@@ -41,7 +45,7 @@ export const ButtonsProfileFollow = ({ id, followers }: { id: string, followers:
             await server.auth(token).post(`/profiles/${id}/follow`)
             setFollowing([profile_id])
         } catch {
-            createAlert({ msg: 'Falha ao seguir esse perfil. Porfavor tente mais tarde!', type: 'error' })
+            createAlert({ msg: 'Falha ao seguir esse perfil. Por favor tente mais tarde!', type: 'error' })
         }
     }
 
@@ -50,8 +54,7 @@ export const ButtonsProfileFollow = ({ id, followers }: { id: string, followers:
             await server.auth(token).post(`/profiles/${id}/unfollow`)
             setFollowing([])
         } catch (erro){
-            console.log(erro, id)
-            createAlert({ msg: 'Falha ao desseguir esse perfil. Porfavor tente mais tarde!', type: 'error' })
+            createAlert({ msg: 'Falha ao desseguir esse perfil. Por favor tente mais tarde!', type: 'error' })
         }
     }
     return (

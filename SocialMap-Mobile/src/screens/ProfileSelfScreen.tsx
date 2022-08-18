@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import InfiniteScroll from 'react-native-infinite-scrolling'
-import {  StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { Context as AuthContext } from "../context/AuthContext";
 
@@ -13,8 +13,13 @@ import { Post } from '../models/Post'
 
 
 export default function ProfileSelfScreen() {
-    const { token,profile_id,  profile, getProfile, background } = useContext(AuthContext);
+    const { token, profile_id, getProfile, createAlert, profile, background } = useContext(AuthContext);
     const [posts, setPosts] = useState<Post[]>([]);
+
+    useEffect(() => {
+        getProfile()
+    }, [])
+
 
     useEffect(() => {
         const getPosts = async () => {
@@ -22,11 +27,12 @@ export default function ProfileSelfScreen() {
                 const response = await server.auth(token).get(`/feed/profile/${profile_id}`)
                 setPosts(response.data.slice(0).reverse())
             } catch (error) {
-                console.log(error)
+                createAlert({ msg: "Houve um erro ao carregar o feed!", type: "error" });
+
             }
         }
         getPosts()
-    }, [])
+    }, [getProfile])
 
     function renderList({ item }: { item: Post }) {
         if (Object.prototype.hasOwnProperty.call(item, "followers")) {

@@ -49,7 +49,7 @@ export default function PostListScreen() {
             )
         } if (Object.prototype.hasOwnProperty.call(item, "title")) {
             return <CardPost post={item} />
-        }
+        } else return <></>
 
     }
 

@@ -63,3 +63,9 @@
     at /src/routers/unsecurity.js:45:27
     at runMicrotasks (<anonymous>)
     at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[2022-08-18T12:56:03.456] [ERROR] aplication - UnauthorizedError: Unauthorized
+    at /src/routers/unsecurity.js:44:71
+[2022-08-18T13:34:09.320] [ERROR] aplication - UnauthorizedError: Unauthorized
+    at /src/routers/unsecurity.js:44:71
+[2022-08-18T13:34:28.475] [ERROR] aplication - UnauthorizedError: Unauthorized
+    at /src/routers/unsecurity.js:44:71

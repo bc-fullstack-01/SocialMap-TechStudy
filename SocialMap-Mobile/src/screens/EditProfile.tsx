@@ -12,7 +12,7 @@ import server from "../api/server";
 
 
 export default function EditProfile() {
-    const { createAlert, token, profile_id } = useContext(AuthContext)
+    const { createAlert, token, profile_id, getProfile } = useContext(AuthContext)
 
     const [file, setFile] = useState<File>()
     const [midia, setMidia] = useState<string>()
@@ -23,7 +23,7 @@ export default function EditProfile() {
 
 
     useEffect(() => {
-        const getProfile = async () => {
+        const getProfileApi = async () => {
             try {
                 const response = await server.auth(token).get(`/profiles/${profile_id}`)
                 setFormData({
@@ -35,7 +35,7 @@ export default function EditProfile() {
                 createAlert({ msg: 'Erro ao obter o perfil', type: 'error' })
             }
         }
-        getProfile()
+        getProfileApi()
     }, [])
 
     const handleSubmit = async () => {
@@ -49,9 +49,10 @@ export default function EditProfile() {
         try {
             await server.upload(token).put('/profiles', data)
             createAlert({ msg: 'Perfil editado com sucesso!', type: 'success' })
+            getProfile()
             navigate('PostList')
         } catch (err) {
-            createAlert({ msg: 'Algo deu errado. Porfavor tente mais tarde!', type: 'error' })
+            createAlert({ msg: 'Algo deu errado. Por favor tente mais tarde!', type: 'error' })
         }
     }
 

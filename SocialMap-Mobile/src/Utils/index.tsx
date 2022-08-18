@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native';
+import Cover from "../assets/backgroundPerfil";
 
 function splitAbout(text: String, words: number = 12) {
     if (text.split(' ').length <= words) return text
@@ -30,9 +30,8 @@ const setMessagensContext = (dispatch: any, type: string, alert: any, other: any
     }, 2500)
 }
 
-const getScreen = () => {
-    const { height, width } = Dimensions.get('screen')
-
+const getBackground = () => {
+    return Cover[new Date().getHours() % Cover.length]
 }
 
 
@@ -42,5 +41,6 @@ export default {
     capitalizeFirstLetter,
     randomNumber,
     getFistsNames,
-    setMessagensContext
+    setMessagensContext,
+    getBackground
 }
