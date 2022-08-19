@@ -2,10 +2,14 @@
   <img alt="NextLevelWeek" title="#NextLevelWeek" src="./midias/logo6.png"/>
 </h1>
 
-
+- [x] Settings Kubernets (Desenvolvendo)
 - [x] API Backend
 - [x] Frontend Web
 - [x] Frontend Mobile
+
+## Arquitetura
+<img width="450" height="430" style="border-radius: 5px" src="Arcthitecture.png" alt="Intro">
+
 
 ## Versão WEB (100% responsiva)
 
@@ -106,7 +110,7 @@ const CONSTANTS = {
 $ npm start
 ```
 
-## Inicie o projeto Mobile (Em desenvolvimento)
+## Inicie o projeto Mobile
 ```shell
 $ cd SocialMap-Mobile
 $ npm install
