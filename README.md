@@ -56,18 +56,29 @@ $ git clone https://github.com/bc-fullstack-01/EdnoAlmeida-ProjetoFinal.git
 $ cd EdnoAlmeida-ProjetoFinal
 ```
 
-## Iniciar o Backend
-
-```shell
-$ cd SocialMap-Backend
-```
-
 - No arquivo .env, mude o valor da variável HOTS para o host da sua rede
 
 ```js
 HOST=SUA_REDE
 ```
+## Iniciando o back e o front juntos
+<br>
 
+```shell
+$ docker-compose up
+```
+- Para popular o banco de dados para fins de teste faça um get na rota a baixo, simplesmente colando esse endereço no navegador. Com o backend rodando é claro.
+```sh
+http://localhost:4000/v1/dev/seed
+```
+## - Iniciando os projetos separadamente
+<br>
+
+## Iniciar o Backend
+
+```shell
+$ cd SocialMap-Backend
+```
 
 ### Inicie o container do Backend
 * OBS: Cuidado com os possíveis erros causados por nomes genéricos nos containers como 'mongodb'. Você pode precisar renomeá-los.
@@ -76,8 +87,6 @@ $ docker-compose build
 $ docker-compose up
 ```
 
-
-
 - No arquivo app.js pode ser necessário comentar a linha que invoca o middlware helmet.
 ```js
 // Middlewares
@@ -85,26 +94,12 @@ app.use(cors())
 //app.use(helmet());
 ```
 
-- Para popular o banco de dados para fins de teste faça um get na rota a baixo, simplesmente colando esse endereço no navegador. Com o backend rodando é claro.
-```sh
-http://localhost:4000/v1/dev/seed
-```
-
 ## Inicie o projeto Frontend
 ```shell
 $ cd SocialMap-Frontend
 $ npm install
 ```
-
-### Mudar o valor no arquivo constante.ts para o host da sua internet
-  * OBS: O projeto React usa a porta 3000 que é bem comum, caso haja algum programa rodando nessa porta você deve alterar uma das duas.
-  
-```js
-const CONSTANTS = {
-    API_HOST: 'http://SUA_REDE:4000/v1',
-    SOCKET_HOST: 'http://SUA_REDE:4000/v1'
-}
-```
+* OBS: O projeto React usa a porta 3000 que é bem comum, caso haja algum programa rodando nessa porta você deve alterar uma das duas.
 
 ```shell
 $ npm start
@@ -117,6 +112,7 @@ $ npm install
 ```
 
 ### Mudar o valor no arquivo constante.ts para o host da sua internet  
+### Optei por fazer isso para poder acessar o backend pelo celular usando a mesma rede
 ```js
 const CONSTANTS = {
     API_HOST: 'http://SUA_REDE:4000/v1',

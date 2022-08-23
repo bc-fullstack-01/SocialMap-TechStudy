@@ -24,7 +24,12 @@ kubectl get secret user-cred -o jsonpath=´{.data}´
 kubectl expose StatefulSet mongodb --type NodePort
 #Criando imagens no dockerHub
 docker build -f Dockerfile.dev -t edno28/socialfront-dev .
+docker build -f Dockerfile.dev -t edno28/socialmap-backend .
+
+docker push  edno28/socialmap-backend
+
 docker run -it -p 4002:3000 edno28/socialfront-dev
+docker run -it -p 4000:4000 edno28/socialmap-backend
 
 
 

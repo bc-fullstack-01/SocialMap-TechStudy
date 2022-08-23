@@ -3,3 +3,7 @@ Arcthitecture.drawio
 SocialMap-Frontend/Dockerfile.dev
 SocialMap-Frontend/Dockerfile
 .dockerignore
+.vscode
+backend
+client
+Makefile

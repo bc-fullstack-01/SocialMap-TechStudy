@@ -83,7 +83,7 @@ const ProfilePage = () => {
     navigate(`/posts/${postId}`);
   }
 
-  function handleSearch(e: React.KeyboardEvent<HTMLInputElement>) {
+  function handleSearch(e: any) {
     var value = e.target.value
     if (value) {
       var profilesFilted = postsAll.filter(post => `${post.title} ${post.content}`.includes(value))

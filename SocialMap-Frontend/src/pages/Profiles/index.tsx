@@ -98,7 +98,7 @@ const Profiles = () => {
   }
 
 
-  function handleSearch(e: React.KeyboardEvent<HTMLInputElement>) {
+  function handleSearch(e: any) {
     var value = e.target.value
     if (value) {
       var profilesFilted = profilesAll.filter(profile => profile.name.includes(value))
