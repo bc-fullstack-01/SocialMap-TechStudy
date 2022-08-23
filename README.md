@@ -55,12 +55,6 @@
 $ git clone https://github.com/bc-fullstack-01/EdnoAlmeida-ProjetoFinal.git
 $ cd EdnoAlmeida-ProjetoFinal
 ```
-
-- No arquivo .env, mude o valor da variável HOTS para o host da sua rede
-
-```js
-HOST=SUA_REDE
-```
 ## Iniciando o back e o front juntos
 <br>
 
@@ -79,7 +73,11 @@ http://localhost:4000/v1/dev/seed
 ```shell
 $ cd SocialMap-Backend
 ```
+- No arquivo .env, mude o valor da variável HOTS para o host da sua rede
 
+```js
+HOST=SUA_REDE
+```
 ### Inicie o container do Backend
 * OBS: Cuidado com os possíveis erros causados por nomes genéricos nos containers como 'mongodb'. Você pode precisar renomeá-los.
 ```shell

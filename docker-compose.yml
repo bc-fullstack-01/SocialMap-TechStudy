@@ -23,7 +23,7 @@ services:
     depends_on:
       - minio
     entrypoint: >
-      /bin/sh -c " /usr/bin/mc config host add --api s3v2 minio http://${HOST}:9000/  ednoAlmeida sysMapCamp; /usr/bin/mc rm -r --force minio/first-bucket; /usr/bin/mc mb -p minio/first-bucket; /usr/bin/mc policy set public minio/first-bucket; /usr/bin/mc admin trace minio -a --debug; "
+      /bin/sh -c " /usr/bin/mc config host add --api s3v2 minio http://localhost:9000/  ednoAlmeida sysMapCamp; /usr/bin/mc rm -r --force minio/first-bucket; /usr/bin/mc mb -p minio/first-bucket; /usr/bin/mc policy set public minio/first-bucket; /usr/bin/mc admin trace minio -a --debug; "
 
   mongodbsocial:
     image: mongo:latest
@@ -62,7 +62,7 @@ services:
       AMQP_URL: amqp://guest:guest@rabbitmq:5672
       MONGO_URL: mongodb://mongodbsocial:27017/mydb
       ACCESS_TOKEN_SECRET: thisismytoken
-      BUCKET_HOST: http://${HOST}:9000/
+      BUCKET_HOST: http://localhost:9000/
       BUCKET_ENDPOINT: http://minio:9000/
       BUCKET_ACCESS_KEY: ednoAlmeida
       BUCKET_SECRET_KEY: sysMapCamp
