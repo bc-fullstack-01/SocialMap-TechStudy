@@ -2,6 +2,8 @@
   <img alt="NextLevelWeek" title="#NextLevelWeek" src="./midias/logo6.png"/>
 </h1>
 
+Projeto da fictícia rede social `SocialMap` para estudo das tecnologías do React, React-native e RabbitMQ.
+
 - [x] API Backend
 - [x] Frontend Web
 - [x] Frontend Mobile
